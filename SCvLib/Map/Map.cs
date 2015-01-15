@@ -10,7 +10,7 @@ namespace SCvLib
 
     }
 
-    public enum MapName
+    public enum MapType
     {
         Demo,
         Small,

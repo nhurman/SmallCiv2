@@ -11,7 +11,7 @@ namespace SCvLib
     }
     public class Player : IPlayer
     {
-        public FactionName Faction;
+        public FactionType Faction;
         public string Name;
         public int Score;
     }

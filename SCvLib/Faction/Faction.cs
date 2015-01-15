@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SCvLib
 {
-    public enum FactionName
+    public enum FactionType
     {
         Elves,
         Dwarves,

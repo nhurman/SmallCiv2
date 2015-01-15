@@ -7,7 +7,7 @@ namespace SCvLib
 {
     public static class GameBuilder
     {
-        public static Game New(MapName map, List<Tuple<string, FactionName>> players)
+        public static Game New(MapType map, List<Tuple<string, FactionType>> players)
         {
             if (2 != players.Count) return null;
 
