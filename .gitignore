@@ -1,0 +1,14 @@
+Debug
+Release
+SCvLib/bin
+SCvLib/obj
+SCvNativeLib/Debug
+SCvNativeLib/Release
+SCvUi/bin
+SCvUi/obj
+
+*.sdf
+*.opensdf
+*.filters
+*.suo
+Thumbs.db
