@@ -4,8 +4,74 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="400" d:DesignWidth="400">
+             d:DesignHeight="300" d:DesignWidth="300">
+
+    <Control.Resources>
+        <DrawingImage x:Key="HexagonImage">
+            <DrawingImage.Drawing>
+                <DrawingGroup>
+                    <GeometryDrawing Brush="White"  
+                           Geometry="M 250,0 L 750,0 L 1000,433 L 750,866 L 250,866 L 0,433 Z">
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="Black" Thickness="10" LineJoin="Round"/>
+                        </GeometryDrawing.Pen>
+                    </GeometryDrawing>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+        <DrawingImage x:Key="HexagonHoverImage">
+            <DrawingImage.Drawing>
+                <DrawingGroup>
+                    <GeometryDrawing Brush="Khaki"  
+                           Geometry="M 250,0 L 750,0 L 1000,433 L 750,866 L 250,866 L 0,433 Z">
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="Black" Thickness="10" LineJoin="Round"/>
+                        </GeometryDrawing.Pen>
+                    </GeometryDrawing>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+        <DrawingImage x:Key="HexagonPressedImage">
+            <DrawingImage.Drawing>
+                <DrawingGroup>
+                    <GeometryDrawing Brush="Orange"  
+                           Geometry="M 250,0 L 750,0 L 1000,433 L 750,866 L 250,866 L 0,433 Z">
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="Black" Thickness="10" LineJoin="Round"/>
+                        </GeometryDrawing.Pen>
+                    </GeometryDrawing>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+
+        <Style x:Key="HexagonButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="Khaki"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Grid>
+                            <Image x:Name="img" Source="{StaticResource HexagonImage}"/>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="img" Property="Source" Value="{StaticResource HexagonHoverImage}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="img" Property="Source" Value="{StaticResource HexagonPressedImage}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Control.Resources>
+    
     <Grid>
-        <Path Stroke="Black" Fill="Gray" Data="M 0,100 L 100,0 L 241.42,0 L 341.42,100 L 341.42,200 " />
+        <Grid.Resources>
+            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource HexagonButtonStyle}"/>
+        </Grid.Resources>
+        <Button/>
     </Grid>
+
 </UserControl>

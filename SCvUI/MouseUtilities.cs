@@ -31,7 +31,7 @@ namespace SCvUI
         public static extern void ClipCursor(ref System.Drawing.Rectangle rect);
 
 
-        public static Point GetMousePosition(Visual relativeTo)
+        public static System.Drawing.Point GetMousePosition(Visual relativeTo)
         {
             Win32Point mouse = new Win32Point();
             GetCursorPos(ref mouse);
@@ -45,7 +45,7 @@ namespace SCvUI
 
             Point offset = transform.Transform(new Point(0, 0));
 
-            return new Point(mouse.X - offset.X, mouse.Y - offset.Y);
+            return new System.Drawing.Point((int)(mouse.X - offset.X), (int)(mouse.Y - offset.Y));
         }
     }
 }
