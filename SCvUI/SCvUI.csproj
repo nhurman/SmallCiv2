@@ -108,6 +108,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SCvLib\SCvLib.csproj">
+      <Project>{9091e810-33c5-44c3-b513-c864a4f28edc}</Project>
+      <Name>SCvLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SCvNativeLib\SCvNativeLib.vcxproj">
       <Project>{d6848407-3363-4ef4-8b13-a5579517f332}</Project>
       <Name>SCvNativeLib</Name>

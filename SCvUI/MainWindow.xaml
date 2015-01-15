@@ -21,9 +21,9 @@
         <!-- INGAME -->
         <Grid x:Name="InGame" Visibility="Visible">
             <Grid.RowDefinitions>
-                <RowDefinition Height="30px"/>
+                <RowDefinition Height="30"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="80px"/>
+                <RowDefinition Height="80"/>
             </Grid.RowDefinitions>
 
             <!-- Hot zones to pan -->
@@ -35,14 +35,14 @@
             <!-- Header -->
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="50px"/>
+                    <ColumnDefinition Width="50"/>
                     <ColumnDefinition/>
-                    <ColumnDefinition Width="200px"/>
+                    <ColumnDefinition Width="200"/>
                     <ColumnDefinition/>
-                    <ColumnDefinition Width="50px"/>
+                    <ColumnDefinition Width="50"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="28px"/>
+                    <RowDefinition Height="28"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
@@ -54,16 +54,16 @@
                 
                 <Label x:Name="Name2" Content="Player2" HorizontalAlignment="Right" Grid.Row="0" Grid.Column="3"/>
                 <Label x:Name="Score2" Content="0" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="4"/>
-                <Border x:Name="Border2" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2" Background="Black"/>
+                <Border x:Name="Border2" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2" Background="Black" Visibility="Collapsed"/>
             </Grid>
 
             <!-- Pause Menu -->
             <Canvas x:Name="PauseMenu" Width="95" Height="140" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,70,0,0" Grid.Row="1" Visibility="Collapsed">
                 <Rectangle Stroke="#000000" Width="95" Height="140"/>
                 <Label Content="Paused" Canvas.Left="10" Canvas.Top="10" HorizontalContentAlignment="Center" Width="75"/>
-                <Button Content="Resume" Canvas.Left="10" Canvas.Top="50" Width="75"></Button>
+                <Button Content="Resume" Canvas.Left="10" Canvas.Top="50" Width="75" Click="Resume_Click"></Button>
                 <Button Content="Save" Canvas.Left="10" Canvas.Top="80" Width="75"></Button>
-                <Button Content="Main Menu" Canvas.Left="10" Canvas.Top="110" Width="75"></Button>
+                <Button Content="Main Menu" Canvas.Left="10" Canvas.Top="110" Width="75" Click="MainMenu_Click"></Button>
             </Canvas>
 
             <!-- Map -->
@@ -72,6 +72,11 @@
             <!-- Bottom Panel -->
             <Grid Grid.Row="2">
                 <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    
                     <!-- Selected Unit -->
                     <Grid Grid.Column="0" x:Name="SelectedUnit" Visibility="Visible">
                         <Grid.ColumnDefinitions>
@@ -88,22 +93,22 @@
                         <Rectangle Grid.Column="0" Width="80" Height="80" HorizontalAlignment="Left" VerticalAlignment="Bottom" Stroke="Black"></Rectangle>
 
                         <!-- Unit stats -->
-                        <Label Grid.Column="1" Content="Unit name" HorizontalAlignment="Left"/>
+                        <Label Grid.Column="1" Name="UnitName" Content="Unit name" HorizontalAlignment="Left"/>
                         <Label Grid.Column="1" Content="HP" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,0,0,0"/>
-                        <Label Grid.Column="1" Content="0/5" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="30,0,0,0"/>
+                        <Label Grid.Column="1" Name="UnitHP" Content="0/5" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="30,0,0,0"/>
 
                         <Label Grid.Column="2" Content="Atk" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,0,0,0"/>
-                        <Label Grid.Column="2" Content="4" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="30,0,0,0"/>
+                        <Label Grid.Column="2" Name="UnitAtk" Content="4" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="30,0,0,0"/>
 
                         <Label Grid.Column="3" Content="Def" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,0,0,0"/>
-                        <Label Grid.Column="3" Content="4" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="30,0,0,0"/>
+                        <Label Grid.Column="3" Name="UnitDef" Content="4" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="30,0,0,0"/>
 
                         <Label Grid.Column="4" Content="Mvt" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,0,0,0"/>
-                        <Label Grid.Column="4" Content="4" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="30,0,0,0"/>
+                        <Label Grid.Column="4" Name="UnitMvt" Content="4" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="30,0,0,0"/>
                     </Grid>
                     
                     <!-- Actions -->
-                    <Button Grid.Column="5" Content="Finish Turn" Width="75" Height="30" HorizontalAlignment="Right" Margin="0,0,10,0"/>
+                    <Button Name="FinishTurn" Grid.Column="1" Content="Finish Turn" Width="75" Height="30" HorizontalAlignment="Right" Margin="0,0,10,0"/>
                 </Grid>
             </Grid>
         </Grid>

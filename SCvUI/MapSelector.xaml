@@ -7,7 +7,7 @@
              d:DesignHeight="44" d:DesignWidth="300">
     <Grid Margin="0,0,0,0">
         <Label Content="Map" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-        <ComboBox HorizontalAlignment="Left" Margin="170,10,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="ComboBox_SelectionChanged">
+        <ComboBox Name="LMap" HorizontalAlignment="Left" Margin="170,10,0,0" VerticalAlignment="Top" Width="120">
             <ComboBoxItem Content="Demo" HorizontalAlignment="Left" Width="118"/>
             <ComboBoxItem Content="Small" HorizontalAlignment="Left" Width="118"/>
             <ComboBoxItem Content="Normal" HorizontalAlignment="Left" Width="118"/>

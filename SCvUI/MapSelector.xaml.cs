@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using SCvLib;
 
 namespace SCvUI
 {
@@ -25,9 +26,24 @@ namespace SCvUI
             InitializeComponent();
         }
 
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        public bool IsValid()
         {
+            return "" != this.LMap.Text;
+        }
 
+        public MapName Map()
+        {
+            switch (this.LMap.Text)
+            {
+                case "Demo":
+                    return MapName.Demo;
+                case "Small":
+                    return MapName.Small;
+                case "Normal":
+                    return MapName.Normal;
+                default:
+                    return MapName.Demo;
+            }
         }
     }
 }

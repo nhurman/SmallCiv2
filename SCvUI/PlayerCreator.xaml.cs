@@ -9,9 +9,11 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using SCvLib;
 
 namespace SCvUI
 {
@@ -23,6 +25,31 @@ namespace SCvUI
         public PlayerCreator()
         {
             InitializeComponent();
+        }
+
+        public bool IsValid()
+        {
+            return ("" != this.LFaction.Text && "" != this.TName.Text);
+        }
+
+        public FactionName Faction()
+        {
+            switch (this.LFaction.Text)
+            {
+                case "Elves":
+                    return FactionName.Elves;
+                case "Dwarves":
+                    return FactionName.Dwarves;
+                case "Orcs":
+                    return FactionName.Orcs;
+                default:
+                    return FactionName.Elves;
+            }
+        }
+
+        public String PlayerName()
+        {
+            return this.TName.Text;
         }
     }
 }

@@ -39,8 +39,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Faction\Faction.cs" />
+    <Compile Include="Game\GameBuilder.cs" />
+    <Compile Include="Game\Game.cs" />
+    <Compile Include="Map\Map.cs" />
+    <Compile Include="Player\Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Map\Tile.cs" />
+    <Compile Include="Unit\Unit.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
