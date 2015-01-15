@@ -99,11 +99,11 @@ int MapGenerator::getTileType(int x, int y) const
 }
 /*Point MapGenerator::getStartTileA() const
 {
-	return startTileA;
+return startTileA;
 }
 Point MapGenerator::getStartTileB() const
 {
-	return startTileB;
+return startTileB;
 }*/
 
 //setters
@@ -168,38 +168,38 @@ startTileB = Point(x, y);
 }*/
 /*void MapGenerator::setStartTiles()
 {
-	int xA, yA;
-	int xB, yB;
-	int rdX = rand() % 2;
-	int rdY = rand() % 2;
-	switch (rdX)
-	{
-	case 0:
-		xA = 0;
-		xB = size - 1;
-		break;
-	case 1:
-		xA = size - 1;
-		xB = 0;
-		break;
-	default:
-		break;
-	}
-	switch (rdY)
-	{
-	case 0:
-		yA = 0;
-		yB = size - 1;
-		break;
-	case 1:
-		yA = size - 1;
-		yB = 0;
-		break;
-	default:
-		break;
-	}
-	startTileA = Point(xA, yA);
-	startTileB = Point(xB, yB);
+int xA, yA;
+int xB, yB;
+int rdX = rand() % 2;
+int rdY = rand() % 2;
+switch (rdX)
+{
+case 0:
+xA = 0;
+xB = size - 1;
+break;
+case 1:
+xA = size - 1;
+xB = 0;
+break;
+default:
+break;
+}
+switch (rdY)
+{
+case 0:
+yA = 0;
+yB = size - 1;
+break;
+case 1:
+yA = size - 1;
+yB = 0;
+break;
+default:
+break;
+}
+startTileA = Point(xA, yA);
+startTileB = Point(xB, yB);
 }*/
 
 //action functions
@@ -254,12 +254,12 @@ bool MapGenerator::canMoveTo(int x1, int y1, int x2, int y2, int unitFaction1, i
 }
 bool MapGenerator::canAttackTo(int x1, int y1, int x2, int y2, int unitFaction1, int unitFaction2, float movePoint) const
 {
-	if (storage.at(Point(x2, y2)) == NONE) {return false; }
+	if (storage.at(Point(x2, y2)) == NONE) { return false; }
 	//specific case for dwarves because they can't attack someone on a distant mountain, even if they are on a mountain ! 
 	if (unitFaction1 != DWARVES)
 	{
 		//the dwarves case appart, the only difference between move or attack is that in the 1st case there isn't a target and in the 2nd, there is
-		return canMoveTo(x1, y1,  x2,  y2,  unitFaction1,  unitFaction2,  movePoint);
+		return canMoveTo(x1, y1, x2, y2, unitFaction1, unitFaction2, movePoint);
 	}
 	else
 	{
