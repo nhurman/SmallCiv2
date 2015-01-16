@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media.Effects;
+using System.Windows.Navigation;
 using System.Windows.Threading;
 using SCvLib;
 using Point = System.Drawing.Point;
@@ -20,7 +23,7 @@ namespace SCvUI
         private bool _isPaused;
         private Unit _selectedUnit;
         private Point _panDirection;
-        private DispatcherTimer _hotzoneTimer;
+        private DispatcherTimer _panTimer;
 
         private static double s_panMargin = 10.0;
         private static double s_panSpeed = 10.0;
@@ -29,16 +32,16 @@ namespace SCvUI
         {
             InitializeComponent();
 
-            _hotzoneTimer = null;
+            _panTimer = null;
             _selectedUnit = null;
             _isPaused = false;
             _game = null;
             _selectedUnit = new Unit {HP = 2, HPMax = 2, Atk = 3, Def = 4, Mvt = 5};
             _panDirection = new Point();
-            _hotzoneTimer = new DispatcherTimer();
-            _hotzoneTimer.Tick += OnScrollTick;
-            _hotzoneTimer.Interval = new TimeSpan(0, 0, 0, 0, 10);
-            _hotzoneTimer.Start();
+            _panTimer = new DispatcherTimer();
+            _panTimer.Tick += OnScrollTick;
+            _panTimer.Interval = new TimeSpan(0, 0, 0, 0, 10);
+            _panTimer.Start();
             
             MainMenu.Visibility = Visibility.Visible;
             GameCreator.Visibility = Visibility.Collapsed;
@@ -60,6 +63,19 @@ namespace SCvUI
                 Tuple.Create("Player1", FactionType.Elves),
                 Tuple.Create("Player2", FactionType.Orcs)
             });
+
+            MapGrid.Margin = new Thickness(0, 0, 0, 0);
+            MapGrid.Children.Clear();
+
+            foreach (ITile t in _game.Map.Tiles)
+            {
+                Console.WriteLine(t);
+                var tile = new TileControl(t.X, t.Y, t.Terrain);
+
+                MapGrid.Children.Add(tile);
+                Grid.SetColumn(tile, t.X);
+                Grid.SetRow(tile, t.Y);
+            }
         }
 
         private void OnKeyDown(object sender, KeyEventArgs e)
@@ -76,9 +92,9 @@ namespace SCvUI
             {
                 MainMenu.Visibility = Visibility.Visible;
                 InGame.Visibility = Visibility.Collapsed;
+                PauseMenu.Visibility = Visibility.Collapsed;
                 return;
             }
-
 
             MainMenu.Visibility = Visibility.Collapsed;
             InGame.Visibility = Visibility.Visible;
@@ -153,10 +169,14 @@ namespace SCvUI
 
         #region InGame Events
         
+        #endregion
+
+        #region Pause menu
         public void OnPause()
         {
             _isPaused = true;
-            FinishTurn.IsEnabled = false;
+            InGame.IsEnabled = false;
+            InGame.Effect = new BlurEffect();
             UpdateHotzones();
             Paint();
             MouseUtilities.ClipCursor(IntPtr.Zero);
@@ -165,20 +185,19 @@ namespace SCvUI
         public void OnResume()
         {
             _isPaused = false;
-            FinishTurn.IsEnabled = true;
+            InGame.IsEnabled = true;
             UpdateHotzones();
+            InGame.Effect = null;
             Paint();
 
             var targetLoc = MainGrid.PointToScreen(new System.Windows.Point(0, 0));
             Rectangle r = new Rectangle(
-                (int) targetLoc.X,
-                (int) targetLoc.Y,
-                (int) (targetLoc.X + MainGrid.ActualWidth),
-                (int) (targetLoc.Y + MainGrid.ActualHeight));
+                (int)targetLoc.X,
+                (int)targetLoc.Y,
+                (int)(targetLoc.X + MainGrid.ActualWidth),
+                (int)(targetLoc.Y + MainGrid.ActualHeight));
             MouseUtilities.ClipCursor(ref r);
         }
-        #endregion
-
         private void Resume_Click(object sender, RoutedEventArgs e)
         {
             OnResume();
@@ -189,10 +208,10 @@ namespace SCvUI
             _game = null;
             Paint();
         }
+        #endregion
 
         private void FinishTurn_Click(object sender, RoutedEventArgs e)
         {
-            MapGrid.Margin = new Thickness(-100, -100, 0, 0);
         }
 
         #region Hotzones
@@ -204,19 +223,32 @@ namespace SCvUI
 
             if (0 == active || _isPaused)
             {
-                _hotzoneTimer.Stop();
+                _panTimer.Stop();
             }
             else
             {
-                _hotzoneTimer.Start();
+                _panTimer.Start();
             }
         }
         private void OnScrollTick(object sender, EventArgs e)
         {
-            MapGrid.Margin = new Thickness(
-                MapGrid.Margin.Left + _panDirection.X * s_panSpeed,
-                MapGrid.Margin.Top + _panDirection.Y * s_panSpeed,
-                0, 0);
+            var x = MapGrid.Margin.Left + _panDirection.X * s_panSpeed;
+            var y = MapGrid.Margin.Top + _panDirection.Y * s_panSpeed;
+
+            if (0 == MapGrid.Children.Count) return;
+
+            var totalW = MapGrid.Children[0].RenderSize.Width;
+            totalW = (totalW + totalW/Math.Sqrt(3))*Math.Sqrt(MapGrid.Children.Count)/2;
+            
+            var totalH = totalW;
+
+            if (x < 100 - totalW) x = 100 - totalW;
+            if (x > MainGrid.ActualWidth - 100) x = MainGrid.ActualWidth - 100;
+            
+            if (y < 0 - totalH) y = 0 - totalH;
+            if (y > MainGrid.ActualHeight - 150) y = MainGrid.ActualHeight - 150;
+
+            MapGrid.Margin = new Thickness(x, y, 0, 0);
         }
 
         private void OnMouseMove(object sender, MouseEventArgs e)

@@ -17,6 +17,8 @@ namespace SCvLib
         public int Turn;
         public int LastTurn;
 
+        public Map Map { get; set; }
+
         public Game()
         {
             Turn = 0;

@@ -56,8 +56,8 @@
     </ApplicationDefinition>
     <Compile Include="HexagonGrid.cs" />
     <Compile Include="MouseUtilities.cs" />
-    <Compile Include="Tile.xaml.cs">
-      <DependentUpon>Tile.xaml</DependentUpon>
+    <Compile Include="TileControl.xaml.cs">
+      <DependentUpon>TileControl.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -79,7 +79,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Tile.xaml">
+    <Page Include="TileControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -122,6 +122,12 @@
       <Project>{9091e810-33c5-44c3-b513-c864a4f28edc}</Project>
       <Name>SCvLib</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Tile\desert.png" />
+    <Resource Include="Resources\Tile\field.png" />
+    <Resource Include="Resources\Tile\forest.png" />
+    <Resource Include="Resources\Tile\mountain.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -16,7 +16,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="SCvLib.Player" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="8.25" Y="2" Width="1.5" />
+    <Position X="11.75" Y="1" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAgAAAAAAAQAAAAAAAAAQAAAAAAAAAA=</HashCode>
       <FileName>Player\Player.cs</FileName>
@@ -24,9 +24,9 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="SCvLib.Tile" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="10" Y="2" Width="1.5" />
+    <Position X="8.25" Y="2" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQEAAAAAAYAA=</HashCode>
       <FileName>Map\Tile.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
@@ -60,6 +60,14 @@
       <FileName>Unit\Unit.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="SCvLib.TileFactory" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="10" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEIAAAAAQAAAAAAAAAAAABAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Map\TileFactory.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
   <Enum Name="SCvLib.FactionType" Collapsed="true">
     <Position X="8.25" Y="3.25" Width="1.5" />
     <TypeIdentifier>
@@ -72,6 +80,13 @@
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAABAAAAIAAAAAAAEAAAAAAA=</HashCode>
       <FileName>Map\Map.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="SCvLib.TileType" Collapsed="true">
+    <Position X="11.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAACAAAAAAAAAAAAAEAAAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>Map\Tile.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Font Name="Segoe UI" Size="9" />

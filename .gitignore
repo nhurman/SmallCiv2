@@ -12,3 +12,12 @@ SCvUi/obj
 *.filters
 *.suo
 Thumbs.db
+
+*.pdf
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.toc
+*.synctex.gz
