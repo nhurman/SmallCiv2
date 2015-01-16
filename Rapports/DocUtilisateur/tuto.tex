@@ -45,7 +45,7 @@ Le chargement d'une partie se fait à partir de l'écran d’accueil (cf. \texts
 	\caption{Une partie en cours}
 	\label{in_game}
 \end{figure}
-Il y a de nombreuses actions possibles en jeu. Commençons par présenter l'interface utilisateur (cf. \textsc{figure~\ref{in_game}}). La zone de texte en bas représente les statistiques de l'unité sélectionnée. On sélectionne unité \textit{via} un clic gauche sur son sprite à l'écran.\newline
+Il y a de nombreuses actions possibles en jeu. Commençons par présenter l'interface utilisateur (cf. \textsc{figure~\ref{in_game}}). La zone de texte représente toutes les unités présentes sur la case avec leurs statistiques ; celle qui va être bougée est mise en évidence. On sélectionne unité \textit{via} un clic gauche sur son sprite à l'écran.\newline
 
 En haut de l'écran on peut voir le score et le pseudo du joueur 1 à gauche (ici, Bob) et ceux du joueur 2 à droite (ici, Leelou). Entre les deux, il s'agit du tour actuel et du nombre de tours maximum de la partie. \newline
 
@@ -57,9 +57,9 @@ Enfin, on déplace l'image pour observer une autre partie de la carte simplement
 	\caption{Une unité en position d'attaquer}
 	\label{mvt_atk}
 \end{figure}
-Voyons maintenant pour le mouvement et l'attaque. Nous avons dit plus tôt que l'on sélectionnait une unité d'un clic gauche. Sur la \textsc{figure~\ref{mvt_atk}}, c'est au tour de Bob, qui contrôle les elfes, au nord de la carte. L'unité sélectionnée est celle marquée en bleu, on voit qu'elle a 1 point de déplacement.\newline
+Voyons maintenant pour le mouvement et l'attaque. Nous avons dit plus tôt que l'on sélectionnait une unité d'un clic gauche. Sur la \textsc{figure~\ref{mvt_atk}}, c'est au tour de Bob, qui contrôle les elfes, au nord-ouest de la carte. L'unité sélectionnée est celle marquée en bleu, on voit qu'elle a 1 point de déplacement (Mvt).\newline
 
-Elle peut donc au choix se déplacer sur une des tuiles en noir, ou attaquer l'adversaire sur la tuile rouge qui est à portée. Dans les deux cas, Bob doit faire un clic droit sur sa destination, soit une tuile vide noire soit la tuile ennemie rouge.\newline
+Elle peut donc au choix se déplacer sur une des tuiles que le jeu met en évidence par une bordure épaisse, ou attaquer l'adversaire sur la tuile rouge qui est à portée. Dans les deux cas, Bob doit faire un clic droit sur sa destination, soit une tuile vide soit la tuile ennemie rouge.\newline
 
 \begin{figure}[h]
 	\centering
