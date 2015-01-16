@@ -12,7 +12,7 @@ namespace SCvUnitTest
             IPlayer p1 = new Player {Faction = FactionType.Elves, Name = "A", Score = 0};
             IPlayer p2 = new Player {Faction = FactionType.Dwarves, Name = "B", Score = 0};
             IPlayer p3 = new Player {Faction = FactionType.Orcs, Name = "C", Score = 0};
-            IGame g = GameBuilder.New(MapType.Demo, p1, p2);
+            IGame g = GameBuilder.New(MapType.Demo, (Player)p1, (Player)p2);
 
             Assert.AreEqual(g.Map.Width, 6);
             Assert.AreEqual(g.Map.Turns, 5);
