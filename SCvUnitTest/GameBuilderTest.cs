@@ -9,18 +9,9 @@ namespace SCvUnitTest
     {
         [TestMethod]
         void TestNew(){
-            Player p1 = new Player();
-            p1.Faction = FactionType.Elves;
-            p1.Name = "A";
-            p1.Score = 0;
-            Player p2 = new Player();
-            p1.Faction = FactionType.Dwarves;
-            p1.Name = "B";
-            p1.Score = 0;
-            Player p3 = new Player();
-            p1.Faction = FactionType.Orcs;
-            p1.Name = "C";
-            p1.Score = 0;
+            IPlayer p1 = new Player {Faction = FactionType.Elves, Name = "A", Score = 0};
+            IPlayer p2 = new Player {Faction = FactionType.Dwarves, Name = "B", Score = 0};
+            IPlayer p3 = new Player {Faction = FactionType.Orcs, Name = "C", Score = 0};
             IGame g = GameBuilder.New(MapType.Demo, p1, p2);
 
             Assert.AreEqual(g.Map.Width, 6);

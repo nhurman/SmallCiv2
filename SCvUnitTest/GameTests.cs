@@ -10,7 +10,7 @@ namespace SCvUnitTest
         [TestMethod]
         public void TestGameCreation()
         {
-            Game game = new Game();
+            IGame game = new Game();
             Assert.AreEqual(game.Turn, 0);
             Assert.AreEqual(game.CurrentPlayerId, 0);
             Assert.AreEqual(Game.Instance, game);
