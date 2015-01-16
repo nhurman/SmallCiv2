@@ -3,7 +3,7 @@
 \subsection{Présentation des unités et des races}
 Les unités dans SmallCiv sont standard : quelle que soit leur race, elles auront les mêmes statistiques. Une unité dispose de 2 d'attaque, 1 d'armure, 5 PV (points de vie) et 1 de déplacement, c'est-à-dire que sauf cas impliquant des bonus raciaux, une unité ne peut faire qu'une action par tour, déplacement ou attaque, car les attaques nécessitent un point de déplacement. \newline
 
-Les joueurs ont 3 races à leur disposition :\newline
+Les joueurs ont 3 races à leur disposition :
 \begin{itemize}\renewcommand{\labelitemi}{$\bullet$}
 \item \textbf{Les elfes} peuvent se déplacer sur une forêt pour 0,5 points de mouvement mais le mouvement vert un désert leur coûte 2 ; de plus, ils ont 1 chance sur 2 de survivre avec 1 PV à un coup qui aurait dû s'avérer mortel.
 \item \textbf{Les orcs} peuvent se déplacer sur une plaine pour 0,5, mais en contrepartie les forêts occupées ne leur rapportent pas de points. Leur dernière capacité est de gagner 1 point d'attaque à chaque adversaire tué.
@@ -11,7 +11,7 @@ Les joueurs ont 3 races à leur disposition :\newline
 \end{itemize}
 
 \subsection{Génération de la carte}
-La carte du monde est générée aléatoirement à chaque début de partie. Le hasard n'est pas complet cependant car l'algorithme de génération favorise des ilôts regroupant plusieurs tuiles de même type. Ces tuiles sont au nombre de 4:\newline
+La carte du monde est générée aléatoirement à chaque début de partie. Le hasard n'est pas complet cependant car l'algorithme de génération favorise des îlots regroupant plusieurs tuiles de même type. Ces tuiles sont au nombre de 4:
 \begin{itemize}
 \item Montagne
 \item Forêt
@@ -20,13 +20,13 @@ La carte du monde est générée aléatoirement à chaque début de partie. Le h
 \end{itemize}
 Outre les bonus/malus raciaux présentés plus haut, les cases sont toutes équivalentes. Toutes les cases occupées par au moins une unité d'un joueur lui rapportent 1 point à la fin de chaque tour. \newline
 
-Les cartes de SmallCiv peuvent être de 3 tailles différentes :\newline
+Les cartes de SmallCiv peuvent être de 3 tailles différentes :
 \begin{itemize}\renewcommand{\labelitemi}{$\bullet$}
 \item \textbf{Démo}, une carte de 6x6 tuiles, la partie se joue en 5 tours maximum et chaque joueur commence avec 4 unités
 \item \textbf{Petite}  10x10 tuiles et 20 tours pour 6 unités par joueur
 \item \textbf{Normale} 14x14, 30 tours et 8 unités
 \end{itemize}
-Une carte contiendra toujours le même nombre de tuiles de chaqque type, quelle que soit leur répartition. De plus, en début de partie, les troupes de chaque joueur sont regroupées sur une tuile dans 2 coins de la carte opposés. 
+Une carte contiendra toujours le même nombre de tuiles de chaque type, quelle que soit leur répartition. De plus, en début de partie, les troupes de chaque joueur sont regroupées sur une tuile dans 2 coins de la carte opposés. 
 
 \subsection{Mouvements}
 Comme nous l'avons dit plus tôt, chaque unité dispose d'1 point de mouvement. Cela signifie que dans la plupart des cas, une unité doit choisir entre déplacement ou combat pour un tour donné. Ce n'est cependant pas systématique car plusieurs cas de bonus surviennent, où un déplacement/une attaque ne coûte que 0,5. Cela signifie que rien n'empêche un elfe de faire 2 déplacements en 1 tour s'il suit une ligne de forêts.\newline
