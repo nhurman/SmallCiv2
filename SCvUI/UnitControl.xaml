@@ -12,7 +12,7 @@
         <BitmapImage x:Key="OrcImage" UriSource="Resources/Unit/Orc.png"></BitmapImage>
     </UserControl.Resources>
 
-    <Grid MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave" MouseDown="Grid_MouseDown" MouseRightButtonDown="Grid_MouseRightButtonDown">
+    <Grid MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave" MouseLeftButtonDown="Grid_MouseDown" MouseRightButtonDown="Grid_MouseRightButtonDown">
         <Image Name="Image" Source="{DynamicResource ElfImage}"/>
     </Grid>
 </UserControl>

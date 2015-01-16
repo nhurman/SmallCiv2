@@ -51,5 +51,10 @@ namespace SCvUI
         {
             return this.TName.Text;
         }
+
+        public Player Player()
+        {
+            return new Player() {Faction = Faction(), Name = PlayerName(), Score = 0};
+        }
     }
 }

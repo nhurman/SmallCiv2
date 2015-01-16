@@ -4,11 +4,14 @@ using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Effects;
 using System.Windows.Navigation;
 using System.Windows.Threading;
 using SCvLib;
+using Color = System.Drawing.Color;
 using Point = System.Drawing.Point;
+
 
 namespace SCvUI
 {
@@ -19,9 +22,9 @@ namespace SCvUI
     /// 
     public partial class MainWindow
     {
-        public static MainWindow INSTANCE;
+        public static MainWindow Instance;
 
-        public Game _game;
+        private Game _game;
         private bool _isPaused;
         private Point _panDirection;
         private DispatcherTimer _panTimer;
@@ -29,15 +32,16 @@ namespace SCvUI
         private static double s_panMargin = 10.0;
         private static double s_panSpeed = 10.0;
 
-        public IUnit _selectedUnit;
+        public IUnit SelectedUnit;
 
         public MainWindow()
         {
             InitializeComponent();
-            INSTANCE = this;
+
+            Instance = this;
+            SelectedUnit = null;
 
             _panTimer = null;
-            _selectedUnit = null;
             _isPaused = false;
             _game = null;
             _panDirection = new Point();
@@ -45,6 +49,7 @@ namespace SCvUI
             _panTimer.Tick += OnScrollTick;
             _panTimer.Interval = new TimeSpan(0, 0, 0, 0, 10);
             _panTimer.Start();
+
             
             MainMenu.Visibility = Visibility.Visible;
             GameCreator.Visibility = Visibility.Collapsed;
@@ -54,33 +59,8 @@ namespace SCvUI
                 Keyboard.KeyDownEvent, new KeyEventHandler(OnKeyDown), true);
             EventManager.RegisterClassHandler(typeof(Window),
                 Mouse.MouseMoveEvent, new MouseEventHandler(OnMouseMove), true);
-
-            //Loaded += OnLoaded;
         }
 
-        private void OnLoaded(object sender, EventArgs e)
-        {
-            ////////FIXME TESTS
-            NewGame(MapType.Demo, new List<Tuple<string, FactionType>>()
-            {
-                Tuple.Create("Player1", FactionType.Elves),
-                Tuple.Create("Player2", FactionType.Orcs)
-            });
-
-            MapGrid.Margin = new Thickness(0, 0, 0, 0);
-            MapGrid.Children.Clear();
-
-            foreach (ITile t in _game.Map.Tiles)
-            {
-                var tile = new TileControl(t.X, t.Y, t.Terrain, t);
-
-                MapGrid.Children.Add(tile);
-                Grid.SetColumn(tile, t.X);
-                Grid.SetRow(tile, t.Y);
-            }
-
-            Paint();
-        }
 
         private void OnKeyDown(object sender, KeyEventArgs e)
         {
@@ -117,63 +97,48 @@ namespace SCvUI
             PauseMenu.Visibility = _isPaused ? Visibility.Visible : Visibility.Collapsed;
 
             // Unit panel
-            SelectedUnit.Visibility = (null != _selectedUnit) ? Visibility.Visible : Visibility.Collapsed;
-            if (null != _selectedUnit)
+            UnitInfoGrid.Visibility = (null != SelectedUnit) ? Visibility.Visible : Visibility.Collapsed;
+            UnitInfoGridContents.Children.Clear();
+            if (null != SelectedUnit)
             {
-                UnitName.Content = _selectedUnit.Name;
-                UnitHP.Content = string.Format("{0}", _selectedUnit.HP);
-                UnitAtk.Content = _selectedUnit.Atk;
-                UnitDef.Content = _selectedUnit.Def;
-                UnitMvt.Content = _selectedUnit.Mvt;
+                var i = 0;
+                foreach (Unit u in SelectedUnit.Tile.Units)
+                {
+                    var info = new UnitDetailsControl(u);
+                    UnitInfoGridContents.Children.Add(info);
+                    Grid.SetRow(info, i);
+                    ++i;
+                }
             }
 
             // Map Grid
             MapGrid.Children.Clear();
-            foreach (ITile t in _game.Map.Tiles)
+            foreach (var t in _game.Map.Tiles)
             {
-                var tile = new TileControl(t.X, t.Y, t.Terrain, t);
+                var tileControl = new TileControl(t);
+                MapGrid.Children.Add(tileControl);
+                Grid.SetColumn(tileControl, t.X);
+                Grid.SetRow(tileControl, t.Y);
 
-                MapGrid.Children.Add(tile);
-                Grid.SetColumn(tile, t.X);
-                Grid.SetRow(tile, t.Y);
-            }
-
-            // Units
-            foreach (TileControl tileControl in MapGrid.Children)
-            {
-                if (tileControl.Grid.Children.Count > 1)
+                foreach (var u in t.Units)
                 {
-                    for (int i = 0; i < tileControl.Grid.Children.Count; ++i)
+                    var unitControl = new UnitControl(u, tileControl)
                     {
-                        if (tileControl.Grid.Children[i] is UnitControl)
-                        {
-                            tileControl.Grid.Children.RemoveAt(i);
-                        }
-                    }
-                }
+                        Margin = new Thickness(
+                            3*_game.Random.Next(-5, 5),
+                            3 * _game.Random.Next(-5, 5),
+                            0, 0)
+                    };
+                    tileControl.Grid.Children.Add(unitControl);
 
-                foreach (IUnit u in tileControl.Tile.Units)
-                {
-                    var uc = new UnitControl(u, tileControl);
-                    uc.Margin = new Thickness(3*_game.Map._random.Next(-5, 5), 3*_game.Map._random.Next(-5, 5), 0, 0);
-                    tileControl.Grid.Children.Add(uc);
+                    if (u.Mvt >= 2) Panel.SetZIndex(unitControl, 4);
+                    else if (u.Mvt >= 1) Panel.SetZIndex(unitControl, 3);
+                    else if (u.Mvt >= 0.5) Panel.SetZIndex(unitControl, 2);
+                    else Panel.SetZIndex(unitControl, 1);
                 }
             }
         }
-
-        private void NewGame(MapType map, List<Tuple<string, FactionType>> players)
-        {
-            _game = GameBuilder.New(map, players);
-            _selectedUnit = null;
-
-
-            _game.Start();
-
-            // Initialize UI
-            OnResume();
-            Paint();
-        }
-
+        
         #region Main menu Events
         private void Exit_OnClick(object sender, RoutedEventArgs e)
         {
@@ -183,17 +148,15 @@ namespace SCvUI
         private void Load_OnClick(object sender, RoutedEventArgs e)
         {
             GameCreator.Visibility = Visibility.Collapsed;
-            _game = Game.LoadGame();
-            _selectedUnit = null;
-
+            _game = GameBuilder.Load();
             OnResume();
-            Paint();
         }
 
         private void Create_OnClick(object sender, RoutedEventArgs e)
         {
             GameCreator.Visibility = Visibility.Visible;
         }
+
         private void Play_OnClick(object sender, RoutedEventArgs e)
         {
             if (!PlayerCreator1.IsValid() || !PlayerCreator2.IsValid())
@@ -205,19 +168,10 @@ namespace SCvUI
             if (PlayerCreator1.Faction() == PlayerCreator2.Faction())
                 return;
 
-            var players = new List<Tuple<string, FactionType>>
-            {
-                Tuple.Create(PlayerCreator1.PlayerName(), PlayerCreator1.Faction()),
-                Tuple.Create(PlayerCreator2.PlayerName(), PlayerCreator2.Faction()),
-            };
-
-            NewGame(MapSelector.Map(), players);
+            _game = GameBuilder.New(MapSelector.Map(), PlayerCreator1.Player(), PlayerCreator2.Player());
+            OnResume();
         }
         #endregion        
-
-        #region InGame Events
-        
-        #endregion
 
         #region Pause menu
         public void OnPause()
@@ -238,6 +192,7 @@ namespace SCvUI
             InGame.Effect = null;
             Paint();
 
+            if (_game == null) return;
             var targetLoc = MainGrid.PointToScreen(new System.Windows.Point(0, 0));
             Rectangle r = new Rectangle(
                 (int)targetLoc.X,
@@ -246,6 +201,7 @@ namespace SCvUI
                 (int)(targetLoc.Y + MainGrid.ActualHeight));
             MouseUtilities.ClipCursor(ref r);
         }
+
         private void Resume_Click(object sender, RoutedEventArgs e)
         {
             OnResume();
@@ -258,7 +214,7 @@ namespace SCvUI
         }
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            Game.SaveGame(_game);
+            GameBuilder.Save(_game);
             OnResume();
         }
         #endregion
@@ -266,29 +222,31 @@ namespace SCvUI
         private void FinishTurn_Click(object sender, RoutedEventArgs e)
         {
             _game.NextTurn();
-            if (_game.Turn >= _game.Map.Turns) OnGameEnded();
-            else
+            if (_game.IsEnded())
             {
-
-                int nbUnits1 = 0, nbUnits2 = 0;
-                foreach (Tile t in _game.Map.Tiles)
-                {
-                    foreach (IUnit u in t.Units)
-                    {
-                        if (u.PlayerId == 0 && u.HP > 0) nbUnits1++;
-                        if (u.PlayerId == 1 && u.HP > 0) nbUnits2++;
-                    }
-                }
-
-                if (nbUnits1 == 0 || nbUnits2 == 0)
-                    OnGameEnded();
+                OnGameEnded();
             }
+
             Paint();
         }
 
         private void OnGameEnded()
         {
-            OnPause();
+            if (_game.Player1.Score > _game.Player2.Score)
+            {
+                MessageBox.Show(string.Format("{0} wins!", _game.Player1.Name));
+            }
+            else if (_game.Player2.Score > _game.Player1.Score)
+            {
+                MessageBox.Show(string.Format("{0} wins!", _game.Player2.Name));
+            }
+            else
+            {
+                MessageBox.Show(string.Format("Draw!"));
+            }
+
+            _game = null;
+            Paint();
         }
 
         #region Hotzones

@@ -14,7 +14,7 @@
     </UserControl.Resources>
     
     <Grid x:Name="Grid">
-        <Path x:Name="HexPath" Data="M 250,0 L 750,0 L 1000,433 L 750,866 L 250,866 L 0,433 Z" Stroke="LightGray" StrokeThickness="0.5" Fill="{DynamicResource DesertBrush}" Margin="0,0,0,0" Stretch="Uniform" MouseRightButtonDown="HexPath_MouseRightButtonDown">
+        <Path x:Name="HexPath" Data="M 250,0 L 750,0 L 1000,433 L 750,866 L 250,866 L 0,433 Z" Stroke="LightGray" StrokeThickness="0.5" Fill="{DynamicResource DesertBrush}" Margin="0,0,0,0" Stretch="Uniform" MouseRightButtonDown="HexPath_MouseRightButtonDown" MouseLeftButtonDown="HexPath_MouseLeftButtonDown">
             <Path.Triggers>
                 <EventTrigger RoutedEvent="Path.MouseEnter">
                     <BeginStoryboard>

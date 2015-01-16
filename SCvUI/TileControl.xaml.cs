@@ -24,28 +24,28 @@ namespace SCvUI
     /// </summary>
     public partial class TileControl : UserControl
     {
-        public TileType Terrain { get; protected set; }
+        public TileType Terrain { get; set; }
         public int X { get; set; }
         public int Y { get; set; }
 
         public ITile Tile { get; set; }
-
-        public TileControl() : base()
+        public TileControl(ITile t) : base()
         {
-            
-        }
-
-        public TileControl(int x, int y, TileType type, ITile t) : base()
-        {
-            X = x;
-            Y = y;
             Tile = t;
-            Terrain = type;
 
             InitializeComponent();
-            switch (Terrain)
+            IUnit u = MainWindow.Instance.SelectedUnit;
+            if (u != null && u.PlayerId == Game.Instance.CurrentPlayerId)
             {
-                case TileType.Desert: this.HexPath.Fill = FindResource("ForestBrush") as Brush;
+                if (u.MoveCost(t) <= u.Mvt)
+                {
+                    this.HexPath.StrokeThickness = 4;
+                }
+            }
+
+            switch (Tile.Terrain)
+            {
+                case TileType.Desert: this.HexPath.Fill = FindResource("DesertBrush") as Brush;
                     break;
 
                 case TileType.Mountain: this.HexPath.Fill = FindResource("MountainBrush") as Brush;
@@ -61,12 +61,10 @@ namespace SCvUI
 
         public void RightClick()
         {
-            if (MainWindow.INSTANCE._selectedUnit == null) return;
-            if (MainWindow.INSTANCE._selectedUnit.PlayerId != MainWindow.INSTANCE._game.CurrentPlayerId) return;
+            if (MainWindow.Instance.SelectedUnit == null) return;
 
-            MainWindow.INSTANCE._game.Map.AttackOrMoveTo(MainWindow.INSTANCE._selectedUnit, Tile);
-            MainWindow.INSTANCE.Paint();
-            //Delay(100, (o, a) => MainWindow.INSTANCE.Paint());
+            MainWindow.Instance.SelectedUnit.AttackOrMoveTo(Tile);
+            MainWindow.Instance.Paint();
         }
 
         private void HexPath_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
@@ -74,12 +72,11 @@ namespace SCvUI
             RightClick();
         }
 
-        static void Delay(int ms, EventHandler action)
+        private void HexPath_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            var tmp = new Timer { Interval = ms };
-            tmp.Tick += new EventHandler((o, e) => tmp.Enabled = false);
-            tmp.Tick += action;
-            tmp.Enabled = true;
+            if (Tile.Units.Count > 0) return;
+            MainWindow.Instance.SelectedUnit = null;
+            MainWindow.Instance.Paint();
         }
     }
 }

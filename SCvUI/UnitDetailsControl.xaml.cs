@@ -7,10 +7,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Forms.VisualStyles;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -19,18 +17,21 @@ using SCvLib;
 namespace SCvUI
 {
     /// <summary>
-    /// Interaction logic for UnitControl.xaml
+    /// Interaction logic for UnitDetailsControl.xaml
     /// </summary>
-    public partial class UnitControl : UserControl
+    public partial class UnitDetailsControl : UserControl
     {
-        private TileControl _tile;
-        public IUnit Unit;
+        public IUnit Unit { get; set; }
 
-        public UnitControl(IUnit unit, TileControl tile)
+        public UnitDetailsControl(IUnit unit)
         {
             InitializeComponent();
-            _tile = tile;
             Unit = unit;
+
+            if (MainWindow.Instance.SelectedUnit == Unit)
+            {
+                this.Background.Fill = new SolidColorBrush(Colors.LightBlue);
+            }
 
             switch (Unit.Faction)
             {
@@ -44,30 +45,16 @@ namespace SCvUI
                     break;
             }
 
-            if (Game.Instance.CurrentPlayerId != Unit.PlayerId)
-            {
-                Effect = new BlurEffect();
-            }
+            this.HP.Content = Unit.HP;
+            this.Mvt.Content = Unit.Mvt;
+            this.Atk.Content = Unit.Atk;
+            this.Def.Content = Unit.Def;
         }
 
-        private void Grid_MouseEnter(object sender, MouseEventArgs e)
-        {
-            _tile.HexPath.Stroke = new SolidColorBrush(Colors.Black);
-        }
-
-        private void Grid_MouseLeave(object sender, MouseEventArgs e)
-        {
-            _tile.HexPath.Stroke = new SolidColorBrush(Colors.LightGray);
-        }
-        
         private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
         {
             MainWindow.Instance.SelectedUnit = Unit;
             MainWindow.Instance.Paint();
-        }
-        private void Grid_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            _tile.RightClick();
         }
     }
 }

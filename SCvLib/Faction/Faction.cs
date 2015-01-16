@@ -7,12 +7,9 @@ namespace SCvLib
 {
     public enum FactionType
     {
-        Elves,
-        Dwarves,
-        Orcs,
-    }
-
-    public interface IFaction
-    {
+        None = -1,
+        Elves = 0,
+        Dwarves = 1,
+        Orcs = 2,
     }
 }

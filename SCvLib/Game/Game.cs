@@ -11,41 +11,50 @@ namespace SCvLib
 {
     public interface IGame
     {
+        IPlayer Player1 { get; set; }
+        IPlayer Player2 { get; set; }
+        int Turn { get; set; }
+        Random Random { get; set; }
+        int Seed { get; set; }
+        IMap Map { get; set; }
+
         int CurrentPlayerId { get; set; }
-        void CreateUnits();
+        void OnDeserialize();
+        void NextTurn();
+        void Start();
+        bool IsEnded();
     }
 
     [Serializable]
     public class Game : IGame
     {
         public int CurrentPlayerId { get; set; }
-        public Player Player1;
-        public Player Player2;
-        public int Turn;
-        private const string SAVE_PATH = "save.bin";
+        public IPlayer Player1 { get; set; }
+        public IPlayer Player2 { get; set; }
+        public int Turn { get; set; }
+        public static IGame Instance { get; set; }
+        public Random Random { get; set; }
+        public int Seed { get; set; }
 
-        public Map Map { get; set; }
+        public IMap Map { get; set; }
 
         public Game()
         {
             Turn = 0;
             CurrentPlayerId = 0;
+            Instance = this;
+
+            var r = new Random();
+            Seed = r.Next();
+
+            OnDeserialize();
         }
 
-        public void CreateUnits()
+        public void OnDeserialize()
         {
-            for (int p = 0; p < 2; ++p)
-            {
-                int x = Map._mapBackend.StartTileX(p);
-                int y = Map._mapBackend.StartTileY(p);
-                ITile t = Map.Tiles[y, x];
-                for (int i = 0; i < Map.Units; ++i)
-                {
-                    IUnit u = new Unit() {Atk = 2, Def = 1, HP = 5, HPMax = 5, Mvt = 1, Faction = (0 == p?Player1.Faction : Player2.Faction), PlayerId = p};
-                    u.Tile = t;
-                    t.AddUnit(u);
-                }
-            }
+            Random = new Random(Seed);
+            if (Map != null)
+                Map.OnDeserialize();
         }
 
         public void NextTurn()
@@ -57,16 +66,17 @@ namespace SCvLib
                 ++Turn;
             }
 
-            CalculateScore();
+            CalculateUnitStats();
         }
 
-        public void CalculateScore()
+        public void CalculateUnitStats()
         {
             Player1.Score = 0;
             Player2.Score = 0;
 
             foreach (Tile t in Map.Tiles)
             {
+                // Remove dead units and reset Mvt
                 List<IUnit> toRemove = new List<IUnit>();
                 foreach (Unit u in t.Units)
                 {
@@ -88,60 +98,35 @@ namespace SCvLib
                 if (t.Units.Count > 0)
                 {
                     IUnit u = t.Units[0];
-                    if (u.Faction == FactionType.Dwarves && t.Terrain == TileType.Field) continue;
-                    if (u.Faction == FactionType.Orcs && t.Terrain == TileType.Forest) continue;
 
-                    if (u.Faction == Player1.Faction) Player1.Score++;
-                    if (u.Faction == Player2.Faction) Player2.Score++;
+                    if (u.Faction == Player1.Faction) Player1.Score += u.Points();
+                    if (u.Faction == Player2.Faction) Player2.Score += u.Points();
                 }
             }
         }
 
         public void Start()
         {
-            CalculateScore();
+            CalculateUnitStats();
         }
 
-        public static void SaveGame(Game g)
+        public bool IsEnded()
         {
-            var formatter = new BinaryFormatter();
-            try
-            {
-                FileStream fileStream = new FileStream(SAVE_PATH, FileMode.Create, FileAccess.Write);
-                formatter.Serialize(fileStream, g);
-                fileStream.Close();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("[ERROR] Unable to save game data : [" + e.Source + "]" + e.Message);
-                if (File.Exists(SAVE_PATH))
-                    File.Delete(SAVE_PATH);
-            }
-        }
+            if (Turn >= Map.Turns) return true;
 
-
-        public static Game LoadGame()
-        {
-            var formatter = new BinaryFormatter();
-            Game g = null;
-
-            if (File.Exists(SAVE_PATH))
+            int n1 = 0, n2 = 0;
+            foreach (ITile t in Map.Tiles)
             {
-                try
+                if (t.Units.Count > 0)
                 {
-                    FileStream fileStream = new FileStream(SAVE_PATH, FileMode.Open, FileAccess.Read);
-                    g = (Game)formatter.Deserialize(fileStream);
-                    fileStream.Close();
-                    g.Map.PostRestore();
+                    if (t.Units[0].PlayerId == 0) ++n1;
+                    else if (t.Units[0].PlayerId == 1) ++n2;
                 }
-                catch (Exception e)
-                {
-                    Console.WriteLine("[ERROR] Unable to read game data : [" + e.Source + "]" + e.Message);
-                    g = null;
-                }
+
+                if (n1 > 0 && n2 > 0) return false;
             }
 
-            return g;
+            return true;
         }
     }
 }

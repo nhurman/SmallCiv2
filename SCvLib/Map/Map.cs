@@ -9,7 +9,13 @@ namespace SCvLib
 {
     public interface IMap
     {
-
+        int Width { get; set; }
+        int Turns { get; set; }
+        int Units { get; set; }
+        ITile[,] Tiles { get; set; }
+        void CreateUnits();
+        void OnDeserialize();
+        double MoveCost(ITile source, ITile dest);
     }
 
     public enum MapType
@@ -31,11 +37,9 @@ namespace SCvLib
         public int Width { get; set; }
         public int Turns { get; set; }
         public int Units { get; set; }
-        public int Seed { get; set; }
-        public ITile[,] Tiles { get; protected set; }
+        public ITile[,] Tiles { get; set; }
 
-        [NonSerialized] public MapBackend _mapBackend;
-        [NonSerialized] public Random _random;
+        [NonSerialized] private MapBackend _mapBackend;
 
         public Map(int width, int turns, int units)
         {
@@ -43,13 +47,9 @@ namespace SCvLib
             Turns = turns;
             Units = units;
             Tiles = new ITile[Width,Width];
-            var r = new Random();
-            Seed = r.Next();
-            _random = new Random(Seed);
             var tileFactory = new TileFactory();
 
-            _mapBackend = new MapBackend(width, Seed);
-            _mapBackend.Generate();
+            OnDeserialize();
 
             for (int y = 0; y < width; ++y)
             {
@@ -61,11 +61,10 @@ namespace SCvLib
             }
         }
 
-        public void PostRestore()
+        public void OnDeserialize()
         {
-            _mapBackend = new MapBackend(Width, Seed);
+            _mapBackend = new MapBackend(Width, Game.Instance.Seed);
             _mapBackend.Generate();
-            _random = new Random(Seed);
         }
 
         public ITile StartTile(int playerId)
@@ -83,87 +82,24 @@ namespace SCvLib
 
         public double MoveCost(ITile source, ITile dest)
         {
-            return _mapBackend.MoveCost((int)source.Faction, source.X, source.Y, dest.X, dest.Y);
+            return _mapBackend.MoveCost((int)source.Units[0].Faction, source.X, source.Y, dest.X, dest.Y);
         }
 
-        public void AttackOrMoveTo(IUnit unit, ITile dstTile)
+        public void CreateUnits()
         {
-            if (unit.Tile == dstTile) return;
-
-            // Is it in range
-            double moveCost = MoveCost(unit.Tile, dstTile);
-            if (moveCost > unit.Mvt)
+            IUnitFactory unitFactory = new UnitFactory();
+            for (int p = 0; p < 2; ++p)
             {
-                Console.WriteLine("Not enough Mvt");
-                return;
-            }
-
-            unit.Mvt -= moveCost;
-
-            // Is it free or ours
-            if (dstTile.Units.Count == 0 || dstTile.Units[0].PlayerId == unit.PlayerId)
-            {
-                unit.Tile.Units.Remove(unit);
-                dstTile.Units.Add(unit);
-                unit.Tile = dstTile;
-                return;
-            }
-
-            // Attack
-            if (moveCost == 0)
-            {
-                if (unit.Mvt <= 0) return;
-                unit.Mvt--;
-            }
-
-            IUnit defendingUnit = dstTile.Units[0];
-            foreach (IUnit u in dstTile.Units)
-            {
-                if (u.Def > defendingUnit.Def)
-                    defendingUnit = u;
-            }
-
-            var nbCombats = _random.Next(3, defendingUnit.Def + 2);
-            int rnd;
-            for (var i = 0; i < nbCombats && unit.HP > 0 && defendingUnit.HP > 0; ++i)
-            {
-                double winProba = 100 * (double)unit.Atk/(unit.Atk + defendingUnit.Def);
-                rnd = _random.Next(1, 100);
-                if (rnd >= winProba)
+                int x = _mapBackend.StartTileX(p);
+                int y = _mapBackend.StartTileY(p);
+                ITile t = Tiles[y, x];
+                for (int i = 0; i < Units; ++i)
                 {
-                    unit.HP--;
-                }
-                else
-                {
-                    defendingUnit.HP--;
+                    IUnit u = unitFactory.Create(0 == p ? Game.Instance.Player1.Faction : Game.Instance.Player2.Faction);
+                    u.PlayerId = p;
+                    u.ForceMoveTo(t);
                 }
             }
-
-            if (defendingUnit.HP <= 0 && unit.Faction == FactionType.Orcs)
-                unit.Atk++;
-            else if (unit.HP <= 0 && defendingUnit.Faction == FactionType.Orcs)
-                defendingUnit.Atk++;
-
-            rnd = _random.Next(0, 2);
-
-            if (defendingUnit.HP <= 0 && unit.Faction == FactionType.Elves && rnd == 1)
-                defendingUnit.HP = 1;
-            else if (unit.HP <= 0 && unit.Faction == FactionType.Elves && rnd == 1)
-                unit.HP = 1;
-
-            if (defendingUnit.HP <= 0)
-            {
-                dstTile.Units.Remove(defendingUnit);
-
-                if (dstTile.Units.Count == 0)
-                {
-                    unit.Tile.Units.Remove(unit);
-                    dstTile.Units.Add(unit);
-                    unit.Tile = dstTile;
-                }
-                return;
-            }
-
         }
     }
 }

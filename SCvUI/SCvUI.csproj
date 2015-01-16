@@ -63,6 +63,9 @@
     <Compile Include="UnitControl.xaml.cs">
       <DependentUpon>UnitControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UnitDetailsControl.xaml.cs">
+      <DependentUpon>UnitDetailsControl.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -88,6 +91,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UnitControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UnitDetailsControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -141,6 +148,9 @@
     <Resource Include="Resources\Unit\Dwarf.png" />
     <Resource Include="Resources\Unit\Elf.png" />
     <Resource Include="Resources\Unit\Orc.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\China.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
