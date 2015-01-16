@@ -1,102 +1,117 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Security.Policy;
-using System.Text;
-using System.Threading.Tasks;
+using System.Drawing;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Windows.Threading;
 using SCvLib;
+using Point = System.Drawing.Point;
 
 namespace SCvUI
 {
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    /// 
+    public partial class MainWindow
     {
         private Game _game;
         private bool _isPaused;
         private Unit _selectedUnit;
+        private Point _panDirection;
+        private DispatcherTimer _hotzoneTimer;
+
+        private static double s_panMargin = 10.0;
+        private static double s_panSpeed = 10.0;
 
         public MainWindow()
         {
             InitializeComponent();
-            this._game = null;
 
-            this._selectedUnit = new Unit {HP = 2, HPMax = 2, Atk = 3, Def = 4, Mvt = 5};
+            _hotzoneTimer = null;
+            _selectedUnit = null;
+            _isPaused = false;
+            _game = null;
+            _selectedUnit = new Unit {HP = 2, HPMax = 2, Atk = 3, Def = 4, Mvt = 5};
+            _panDirection = new Point();
+            _hotzoneTimer = new DispatcherTimer();
+            _hotzoneTimer.Tick += OnScrollTick;
+            _hotzoneTimer.Interval = new TimeSpan(0, 0, 0, 0, 10);
+            _hotzoneTimer.Start();
+            
+            MainMenu.Visibility = Visibility.Visible;
+            GameCreator.Visibility = Visibility.Collapsed;
+            InGame.Visibility = Visibility.Collapsed;
 
-            this.MainMenu.Visibility = Visibility.Visible;
-            this.GameCreator.Visibility = Visibility.Collapsed;
-            this.InGame.Visibility = Visibility.Collapsed;
+            EventManager.RegisterClassHandler(typeof(Window),
+                Keyboard.KeyDownEvent, new KeyEventHandler(OnKeyDown), true);
+            EventManager.RegisterClassHandler(typeof(Window),
+                Mouse.MouseMoveEvent, new MouseEventHandler(OnMouseMove), true);
 
-            ////////FIXME TESTS
-            NewGame(MapName.Demo, new List<Tuple<string, FactionName>>()
-            {
-                Tuple.Create("Player1", FactionName.Elves),
-                Tuple.Create("Player2", FactionName.Orcs)
-            });
-
-            EventManager.RegisterClassHandler(typeof (Window),
-                Keyboard.KeyDownEvent, new KeyEventHandler(keyDown), true);
+            Loaded += OnLoaded;
         }
-        private void keyDown(object sender, KeyEventArgs e)
+
+        private void OnLoaded(object sender, EventArgs e)
+        {
+            ////////FIXME TESTS
+            NewGame(MapType.Demo, new List<Tuple<string, FactionType>>()
+            {
+                Tuple.Create("Player1", FactionType.Elves),
+                Tuple.Create("Player2", FactionType.Orcs)
+            });
+        }
+
+        private void OnKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key != Key.Escape) return;
-            if (this._isPaused) OnResume();
+            if (_isPaused) OnResume();
             else OnPause();
         }
 
         public void Paint()
         {
             // Are we in a game
-            if (null == this._game)
+            if (null == _game)
             {
-                this.MainMenu.Visibility = Visibility.Visible;
-                this.InGame.Visibility = Visibility.Collapsed;
+                MainMenu.Visibility = Visibility.Visible;
+                InGame.Visibility = Visibility.Collapsed;
                 return;
             }
 
-            this.MainMenu.Visibility = Visibility.Collapsed;
-            this.InGame.Visibility = Visibility.Visible;
+
+            MainMenu.Visibility = Visibility.Collapsed;
+            InGame.Visibility = Visibility.Visible;
 
             // Header
-            this.Name1.Content = this._game.Player1.Name;
-            this.Name2.Content = this._game.Player2.Name;
-            this.Score1.Content = this._game.Player1.Score.ToString();
-            this.Score2.Content = this._game.Player2.Score.ToString();
-            this.Turn.Content = string.Format("{0}/{1}", this._game.Turn, this._game.LastTurn);
+            Name1.Content = _game.Player1.Name;
+            Name2.Content = _game.Player2.Name;
+            Score1.Content = _game.Player1.Score.ToString();
+            Score2.Content = _game.Player2.Score.ToString();
+            Turn.Content = string.Format("{0}/{1}", _game.Turn, _game.LastTurn);
 
-            this.InGame.Visibility = Visibility.Visible;
-            this.PauseMenu.Visibility = this._isPaused ? Visibility.Visible : Visibility.Collapsed;
+            InGame.Visibility = Visibility.Visible;
+            PauseMenu.Visibility = _isPaused ? Visibility.Visible : Visibility.Collapsed;
 
             // Unit panel
-            this.SelectedUnit.Visibility = (null != this._selectedUnit) ? Visibility.Visible : Visibility.Collapsed;
-            if (null != this._selectedUnit)
+            SelectedUnit.Visibility = (null != _selectedUnit) ? Visibility.Visible : Visibility.Collapsed;
+            if (null != _selectedUnit)
             {
-                this.UnitName.Content = this._selectedUnit.Name;
-                this.UnitHP.Content = string.Format("{0}/{1}", this._selectedUnit.HP, this._selectedUnit.HPMax);
-                this.UnitAtk.Content = this._selectedUnit.Atk;
-                this.UnitDef.Content = this._selectedUnit.Def;
-                this.UnitMvt.Content = this._selectedUnit.Mvt;
+                UnitName.Content = _selectedUnit.Name;
+                UnitHP.Content = string.Format("{0}/{1}", _selectedUnit.HP, _selectedUnit.HPMax);
+                UnitAtk.Content = _selectedUnit.Atk;
+                UnitDef.Content = _selectedUnit.Def;
+                UnitMvt.Content = _selectedUnit.Mvt;
             }
         }
 
-        private void NewGame(MapName map, List<Tuple<string, FactionName>> players)
+        private void NewGame(MapType map, List<Tuple<string, FactionType>> players)
         {
-            this._game = GameBuilder.New(map, players);
-            this._selectedUnit = null;
+            _game = GameBuilder.New(map, players);
+            _selectedUnit = null;
 
 
-            //this._game.Start();
+            //_game.Start();
 
             // Initialize UI
             OnResume();
@@ -111,28 +126,28 @@ namespace SCvUI
 
         private void Load_OnClick(object sender, RoutedEventArgs e)
         {
-            this.GameCreator.Visibility = Visibility.Collapsed;
+            GameCreator.Visibility = Visibility.Collapsed;
         }
 
         private void Create_OnClick(object sender, RoutedEventArgs e)
         {
-            this.GameCreator.Visibility = Visibility.Visible;
+            GameCreator.Visibility = Visibility.Visible;
         }
         private void Play_OnClick(object sender, RoutedEventArgs e)
         {
-            if (!this.PlayerCreator1.IsValid() || !this.PlayerCreator2.IsValid())
+            if (!PlayerCreator1.IsValid() || !PlayerCreator2.IsValid())
                 return;
 
-            if (!this.MapSelector.IsValid())
+            if (!MapSelector.IsValid())
                 return;
 
-            var players = new List<Tuple<string, FactionName>>
+            var players = new List<Tuple<string, FactionType>>
             {
-                Tuple.Create(this.PlayerCreator1.PlayerName(), this.PlayerCreator1.Faction()),
-                Tuple.Create(this.PlayerCreator2.PlayerName(), this.PlayerCreator2.Faction()),
+                Tuple.Create(PlayerCreator1.PlayerName(), PlayerCreator1.Faction()),
+                Tuple.Create(PlayerCreator2.PlayerName(), PlayerCreator2.Faction()),
             };
 
-            NewGame(this.MapSelector.Map(), players);
+            NewGame(MapSelector.Map(), players);
         }
         #endregion        
 
@@ -140,16 +155,27 @@ namespace SCvUI
         
         public void OnPause()
         {
-            this._isPaused = true;
-            this.FinishTurn.IsEnabled = false;
+            _isPaused = true;
+            FinishTurn.IsEnabled = false;
+            UpdateHotzones();
             Paint();
+            MouseUtilities.ClipCursor(IntPtr.Zero);
         }
 
         public void OnResume()
         {
-            this._isPaused = false;
-            this.FinishTurn.IsEnabled = true;
+            _isPaused = false;
+            FinishTurn.IsEnabled = true;
+            UpdateHotzones();
             Paint();
+
+            var targetLoc = MainGrid.PointToScreen(new System.Windows.Point(0, 0));
+            Rectangle r = new Rectangle(
+                (int) targetLoc.X,
+                (int) targetLoc.Y,
+                (int) (targetLoc.X + MainGrid.ActualWidth),
+                (int) (targetLoc.Y + MainGrid.ActualHeight));
+            MouseUtilities.ClipCursor(ref r);
         }
         #endregion
 
@@ -160,9 +186,73 @@ namespace SCvUI
 
         private void MainMenu_Click(object sender, RoutedEventArgs e)
         {
-            this._game = null;
+            _game = null;
             Paint();
         }
-    }
 
+        private void FinishTurn_Click(object sender, RoutedEventArgs e)
+        {
+            MapGrid.Margin = new Thickness(-100, -100, 0, 0);
+        }
+
+        #region Hotzones
+        private void UpdateHotzones()
+        {
+            var active = 0;
+            if (0 != _panDirection.X) ++active;
+            if (0 != _panDirection.Y) ++active;
+
+            if (0 == active || _isPaused)
+            {
+                _hotzoneTimer.Stop();
+            }
+            else
+            {
+                _hotzoneTimer.Start();
+            }
+        }
+        private void OnScrollTick(object sender, EventArgs e)
+        {
+            MapGrid.Margin = new Thickness(
+                MapGrid.Margin.Left + _panDirection.X * s_panSpeed,
+                MapGrid.Margin.Top + _panDirection.Y * s_panSpeed,
+                0, 0);
+        }
+
+        private void OnMouseMove(object sender, MouseEventArgs e)
+        {
+            if (null == MapGrid) return;
+
+            Point p = MouseUtilities.GetMousePosition(this);
+
+            if (p.X < s_panMargin)
+            {
+                _panDirection.X = 1;
+            }
+            else if (p.X > MainGrid.ActualWidth - s_panMargin - 1)
+            {
+                _panDirection.X = -1;
+            }
+            else
+            {
+                _panDirection.X = 0;
+            }
+
+            if (p.Y < s_panMargin)
+            {
+                _panDirection.Y = 1;
+            }
+            else if (p.Y > MainGrid.ActualHeight - s_panMargin - 1)
+            {
+                _panDirection.Y = -1;
+            }
+            else
+            {
+                _panDirection.Y = 0;
+            }
+
+            UpdateHotzones();
+        }
+        #endregion
+    }
 }

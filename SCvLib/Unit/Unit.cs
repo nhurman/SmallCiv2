@@ -18,7 +18,7 @@ namespace SCvLib
         public int Def  { get; set; }
         public int Mvt  { get; set; }
         public string Name { get; set; }
-        public FactionName Faction { get; set; }
+        public FactionType Faction { get; set; }
 
         public bool CanMoveTo(ITile dest)
         {
@@ -31,7 +31,7 @@ namespace SCvLib
         public Elf()
             : base()
         {
-            Faction = FactionName.Elves;
+            Faction = FactionType.Elves;
         }
     }
     public class Dwarf : Unit
@@ -39,7 +39,7 @@ namespace SCvLib
         public Dwarf()
             : base()
         {
-            Faction = FactionName.Dwarves;
+            Faction = FactionType.Dwarves;
         }
     }
     public class Orc : Unit
@@ -47,7 +47,7 @@ namespace SCvLib
         public Orc()
             : base()
         {
-            Faction = FactionName.Orcs;
+            Faction = FactionType.Orcs;
         }
     }
 }

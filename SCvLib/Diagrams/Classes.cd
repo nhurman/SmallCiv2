@@ -60,14 +60,14 @@
       <FileName>Unit\Unit.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Enum Name="SCvLib.FactionName" Collapsed="true">
+  <Enum Name="SCvLib.FactionType" Collapsed="true">
     <Position X="8.25" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAQAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAQAAA=</HashCode>
       <FileName>Faction\Faction.cs</FileName>
     </TypeIdentifier>
   </Enum>
-  <Enum Name="SCvLib.MapName" Collapsed="true">
+  <Enum Name="SCvLib.MapType" Collapsed="true">
     <Position X="10" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAABAAAAIAAAAAAAEAAAAAAA=</HashCode>

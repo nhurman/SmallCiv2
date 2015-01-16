@@ -32,18 +32,18 @@ namespace SCvUI
             return ("" != this.LFaction.Text && "" != this.TName.Text);
         }
 
-        public FactionName Faction()
+        public FactionType Faction()
         {
             switch (this.LFaction.Text)
             {
                 case "Elves":
-                    return FactionName.Elves;
+                    return FactionType.Elves;
                 case "Dwarves":
-                    return FactionName.Dwarves;
+                    return FactionType.Dwarves;
                 case "Orcs":
-                    return FactionName.Orcs;
+                    return FactionType.Orcs;
                 default:
-                    return FactionName.Elves;
+                    return FactionType.Elves;
             }
         }
 

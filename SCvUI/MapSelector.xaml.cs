@@ -31,18 +31,18 @@ namespace SCvUI
             return "" != this.LMap.Text;
         }
 
-        public MapName Map()
+        public MapType Map()
         {
             switch (this.LMap.Text)
             {
                 case "Demo":
-                    return MapName.Demo;
+                    return MapType.Demo;
                 case "Small":
-                    return MapName.Small;
+                    return MapType.Small;
                 case "Normal":
-                    return MapName.Normal;
+                    return MapType.Normal;
                 default:
-                    return MapName.Demo;
+                    return MapType.Demo;
             }
         }
     }

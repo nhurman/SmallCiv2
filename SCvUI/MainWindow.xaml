@@ -3,7 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:scvUi="clr-namespace:SCvUI"
         Title="SmallCiv" Height="447" Width="615">
-    <Grid>
+
+    <Grid x:Name="MainGrid">
         <!-- MAIN MENU -->
         <Grid x:Name="MainMenu" Visibility="Collapsed">
             <Button x:Name="Exit" Click="Exit_OnClick" Content="Exit" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="75"/>
@@ -25,12 +26,6 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="80"/>
             </Grid.RowDefinitions>
-
-            <!-- Hot zones to pan -->
-            <Rectangle Name="PanLeft" Height="{Binding ElementName=InGame, Path=ActualHeight}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="10" Grid.Row="0" Grid.RowSpan="3"/>
-            <Rectangle Name="PanTop" Width="{Binding ElementName=InGame, Path=ActualWidth}" HorizontalAlignment="Left" VerticalAlignment="Top" Height="10" Grid.Row="0"/>
-            <Rectangle Name="PanRight" Height="{Binding ElementName=InGame, Path=ActualHeight}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="10" Grid.Row="0" Grid.RowSpan="3"/>
-            <Rectangle Name="PanBot" Width="{Binding ElementName=InGame, Path=ActualWidth}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="10" Grid.Row="2"/>
 
             <!-- Header -->
             <Grid Grid.Row="0">
@@ -58,8 +53,8 @@
             </Grid>
 
             <!-- Pause Menu -->
-            <Canvas x:Name="PauseMenu" Width="95" Height="140" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,70,0,0" Grid.Row="1" Visibility="Collapsed">
-                <Rectangle Stroke="#000000" Width="95" Height="140"/>
+            <Canvas ZIndex="10" x:Name="PauseMenu" Width="95" Height="140" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,70,0,0" Grid.Row="1" Visibility="Collapsed">
+                <Rectangle Fill="White" Stroke="#000000" Width="95" Height="140"/>
                 <Label Content="Paused" Canvas.Left="10" Canvas.Top="10" HorizontalContentAlignment="Center" Width="75"/>
                 <Button Content="Resume" Canvas.Left="10" Canvas.Top="50" Width="75" Click="Resume_Click"></Button>
                 <Button Content="Save" Canvas.Left="10" Canvas.Top="80" Width="75"></Button>
@@ -67,8 +62,23 @@
             </Canvas>
 
             <!-- Map -->
-            <Grid Grid.Row="1" x:Name="Map" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            
+            <scvUi:HexagonGrid Grid.Row="1" x:Name="MapGrid" HexagonSideLength="30">
+                <scvUi:Tile Grid.Column="0" Grid.Row="0"/>
+                <scvUi:Tile Grid.Column="1" Grid.Row="0"/>
+                <scvUi:Tile Grid.Column="2" Grid.Row="0"/>
+                <scvUi:Tile Grid.Column="3" Grid.Row="0"/>
+
+                <scvUi:Tile Grid.Column="0" Grid.Row="1"/>
+                <scvUi:Tile Grid.Column="1" Grid.Row="1"/>
+                <scvUi:Tile Grid.Column="2" Grid.Row="1"/>
+                <scvUi:Tile Grid.Column="3" Grid.Row="1"/>
+
+                <scvUi:Tile Grid.Column="0" Grid.Row="2"/>
+                <scvUi:Tile Grid.Column="1" Grid.Row="2"/>
+                <scvUi:Tile Grid.Column="2" Grid.Row="2"/>
+                <scvUi:Tile Grid.Column="3" Grid.Row="2"/>
+            </scvUi:HexagonGrid>
+
             <!-- Bottom Panel -->
             <Grid Grid.Row="2">
                 <Grid>
@@ -108,7 +118,7 @@
                     </Grid>
                     
                     <!-- Actions -->
-                    <Button Name="FinishTurn" Grid.Column="1" Content="Finish Turn" Width="75" Height="30" HorizontalAlignment="Right" Margin="0,0,10,0"/>
+                    <Button Name="FinishTurn" Grid.Column="1" Content="Finish Turn" Width="75" Height="30" HorizontalAlignment="Right" Margin="0,0,10,0" Click="FinishTurn_Click"/>
                 </Grid>
             </Grid>
         </Grid>
