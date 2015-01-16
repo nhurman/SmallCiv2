@@ -12,9 +12,9 @@ namespace Wrapper
 	private:
 		NativeMapBackend* _mapBackend;
 	public:
-		MapBackend(int size)
+		MapBackend(int size, int seed)
 		{
-			_mapBackend = NativeMapBackend_new(size);
+			_mapBackend = NativeMapBackend_new(size, seed);
 		}
 
 		~MapBackend()
@@ -32,9 +32,9 @@ namespace Wrapper
 			return NativeMapBackend_tileType(_mapBackend, x, y);
 		}
 
-		bool CanMoveTo(int faction, int srcX, int srcY, int dstX, int dstY)
+		double MoveCost(int faction, int srcX, int srcY, int dstX, int dstY)
 		{
-			return NativeMapBackend_canMoveTo(_mapBackend, (FactionType)faction, srcX, srcY, dstX, dstY);
+			return NativeMapBackend_moveCost(_mapBackend, (FactionType)faction, srcX, srcY, dstX, dstY);
 		}
 
 		int StartTileX(int playerId)

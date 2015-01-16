@@ -30,17 +30,18 @@ enum TileType
 class DLLSPEC NativeMapBackend
 {
 public:
-	NativeMapBackend(int size);
+	NativeMapBackend(int size, int seed);
 	~NativeMapBackend();
 
 	void generate();
 	TileType tileType(int x, int y);
-	bool canMoveTo(FactionType faction, int srcX, int srcY, int dstX, int dstY);
+	float moveCost(FactionType faction, int srcX, int srcY, int dstX, int dstY);
 	void startTile(int playerId, int& x, int& y);
 	int distanceTo(int srcX, int srcY, int dstX, int dstY);
 
 private:
 	int m_size;
+	int m_seed;
 	std::vector<std::vector<TileType>>* m_tiles;
 
 	void offsetToCube(int x, int y, int& cx, int& cy, int& cz);
@@ -48,10 +49,10 @@ private:
 };
 
 
-EXTERNC NativeMapBackend* NativeMapBackend_new(int size);
+EXTERNC NativeMapBackend* NativeMapBackend_new(int size, int seed);
 EXTERNC void NativeMapBackend_delete(NativeMapBackend* self);
 EXTERNC void NativeMapBackend_generate(NativeMapBackend* self);
 EXTERNC TileType NativeMapBackend_tileType(NativeMapBackend* self, int x, int y);
-EXTERNC bool NativeMapBackend_canMoveTo(NativeMapBackend* self, FactionType faction, int srcX, int srcY, int dstX, int dstY);
+EXTERNC double NativeMapBackend_moveCost(NativeMapBackend* self, FactionType faction, int srcX, int srcY, int dstX, int dstY);
 EXTERNC void NativeMapBackend_startTile(NativeMapBackend* self, int playerId, int& x, int& y);
 EXTERNC int NativeMapBackend_distanceTo(NativeMapBackend* self, int srcX, int srcY, int dstX, int dstY);

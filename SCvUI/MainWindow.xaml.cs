@@ -19,24 +19,27 @@ namespace SCvUI
     /// 
     public partial class MainWindow
     {
-        private Game _game;
+        public static MainWindow INSTANCE;
+
+        public Game _game;
         private bool _isPaused;
-        private Unit _selectedUnit;
         private Point _panDirection;
         private DispatcherTimer _panTimer;
 
         private static double s_panMargin = 10.0;
         private static double s_panSpeed = 10.0;
 
+        public IUnit _selectedUnit;
+
         public MainWindow()
         {
             InitializeComponent();
+            INSTANCE = this;
 
             _panTimer = null;
             _selectedUnit = null;
             _isPaused = false;
             _game = null;
-            _selectedUnit = new Unit {HP = 2, HPMax = 2, Atk = 3, Def = 4, Mvt = 5};
             _panDirection = new Point();
             _panTimer = new DispatcherTimer();
             _panTimer.Tick += OnScrollTick;
@@ -52,7 +55,7 @@ namespace SCvUI
             EventManager.RegisterClassHandler(typeof(Window),
                 Mouse.MouseMoveEvent, new MouseEventHandler(OnMouseMove), true);
 
-            Loaded += OnLoaded;
+            //Loaded += OnLoaded;
         }
 
         private void OnLoaded(object sender, EventArgs e)
@@ -69,13 +72,14 @@ namespace SCvUI
 
             foreach (ITile t in _game.Map.Tiles)
             {
-                Console.WriteLine(t);
-                var tile = new TileControl(t.X, t.Y, t.Terrain);
+                var tile = new TileControl(t.X, t.Y, t.Terrain, t);
 
                 MapGrid.Children.Add(tile);
                 Grid.SetColumn(tile, t.X);
                 Grid.SetRow(tile, t.Y);
             }
+
+            Paint();
         }
 
         private void OnKeyDown(object sender, KeyEventArgs e)
@@ -104,7 +108,10 @@ namespace SCvUI
             Name2.Content = _game.Player2.Name;
             Score1.Content = _game.Player1.Score.ToString();
             Score2.Content = _game.Player2.Score.ToString();
-            Turn.Content = string.Format("{0}/{1}", _game.Turn, _game.LastTurn);
+            Turn.Content = string.Format("{0}/{1}", _game.Turn, _game.Map.Turns);
+
+            Border1.Visibility = (_game.CurrentPlayerId == 0) ? Visibility.Visible : Visibility.Hidden;
+            Border2.Visibility = (_game.CurrentPlayerId == 1) ? Visibility.Visible : Visibility.Hidden;
 
             InGame.Visibility = Visibility.Visible;
             PauseMenu.Visibility = _isPaused ? Visibility.Visible : Visibility.Collapsed;
@@ -114,10 +121,43 @@ namespace SCvUI
             if (null != _selectedUnit)
             {
                 UnitName.Content = _selectedUnit.Name;
-                UnitHP.Content = string.Format("{0}/{1}", _selectedUnit.HP, _selectedUnit.HPMax);
+                UnitHP.Content = string.Format("{0}", _selectedUnit.HP);
                 UnitAtk.Content = _selectedUnit.Atk;
                 UnitDef.Content = _selectedUnit.Def;
                 UnitMvt.Content = _selectedUnit.Mvt;
+            }
+
+            // Map Grid
+            MapGrid.Children.Clear();
+            foreach (ITile t in _game.Map.Tiles)
+            {
+                var tile = new TileControl(t.X, t.Y, t.Terrain, t);
+
+                MapGrid.Children.Add(tile);
+                Grid.SetColumn(tile, t.X);
+                Grid.SetRow(tile, t.Y);
+            }
+
+            // Units
+            foreach (TileControl tileControl in MapGrid.Children)
+            {
+                if (tileControl.Grid.Children.Count > 1)
+                {
+                    for (int i = 0; i < tileControl.Grid.Children.Count; ++i)
+                    {
+                        if (tileControl.Grid.Children[i] is UnitControl)
+                        {
+                            tileControl.Grid.Children.RemoveAt(i);
+                        }
+                    }
+                }
+
+                foreach (IUnit u in tileControl.Tile.Units)
+                {
+                    var uc = new UnitControl(u, tileControl);
+                    uc.Margin = new Thickness(3*_game.Map._random.Next(-5, 5), 3*_game.Map._random.Next(-5, 5), 0, 0);
+                    tileControl.Grid.Children.Add(uc);
+                }
             }
         }
 
@@ -127,7 +167,7 @@ namespace SCvUI
             _selectedUnit = null;
 
 
-            //_game.Start();
+            _game.Start();
 
             // Initialize UI
             OnResume();
@@ -143,6 +183,11 @@ namespace SCvUI
         private void Load_OnClick(object sender, RoutedEventArgs e)
         {
             GameCreator.Visibility = Visibility.Collapsed;
+            _game = Game.LoadGame();
+            _selectedUnit = null;
+
+            OnResume();
+            Paint();
         }
 
         private void Create_OnClick(object sender, RoutedEventArgs e)
@@ -155,6 +200,9 @@ namespace SCvUI
                 return;
 
             if (!MapSelector.IsValid())
+                return;
+
+            if (PlayerCreator1.Faction() == PlayerCreator2.Faction())
                 return;
 
             var players = new List<Tuple<string, FactionType>>
@@ -208,10 +256,39 @@ namespace SCvUI
             _game = null;
             Paint();
         }
+        private void Save_Click(object sender, RoutedEventArgs e)
+        {
+            Game.SaveGame(_game);
+            OnResume();
+        }
         #endregion
 
         private void FinishTurn_Click(object sender, RoutedEventArgs e)
         {
+            _game.NextTurn();
+            if (_game.Turn >= _game.Map.Turns) OnGameEnded();
+            else
+            {
+
+                int nbUnits1 = 0, nbUnits2 = 0;
+                foreach (Tile t in _game.Map.Tiles)
+                {
+                    foreach (IUnit u in t.Units)
+                    {
+                        if (u.PlayerId == 0 && u.HP > 0) nbUnits1++;
+                        if (u.PlayerId == 1 && u.HP > 0) nbUnits2++;
+                    }
+                }
+
+                if (nbUnits1 == 0 || nbUnits2 == 0)
+                    OnGameEnded();
+            }
+            Paint();
+        }
+
+        private void OnGameEnded()
+        {
+            OnPause();
         }
 
         #region Hotzones

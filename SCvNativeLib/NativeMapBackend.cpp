@@ -1,6 +1,6 @@
 #include "NativeMapBackend.h"
 
-NativeMapBackend::NativeMapBackend(int size) : m_size(size)
+NativeMapBackend::NativeMapBackend(int size, int seed) : m_size(size), m_seed(seed)
 {
 	m_tiles = new std::vector<std::vector<TileType>>();
 	(*m_tiles).resize(m_size);
@@ -33,15 +33,40 @@ TileType NativeMapBackend::tileType(int x, int y)
 	return (*m_tiles)[y][x];
 }
 
-bool NativeMapBackend::canMoveTo(FactionType faction, int srcX, int srcY, int dstX, int dstY)
+float NativeMapBackend::moveCost(FactionType faction, int srcX, int srcY, int dstX, int dstY)
 {
-	return true;
+	int distance = distanceTo(srcX, srcY, dstX, dstY);
+
+	if (faction == FactionType::Dwarves && tileType(srcX, srcY) == TileType::Mountain && tileType(dstX, dstY) == TileType::Mountain)
+		return 0;
+
+	if (distance > 1) { return 1000; } // FIXME Pathfinding
+
+	if (faction == FactionType::Elves && tileType(srcX, srcY) == TileType::Forest)
+		return 0.5;
+
+	if (faction == FactionType::Elves && tileType(srcX, srcY) == TileType::Desert)
+		return 2;
+
+	if (faction == FactionType::Orcs && tileType(srcX, srcY) == TileType::Field)
+		return 0.5;
+
+	if (faction == FactionType::Dwarves && tileType(srcX, srcY) == TileType::Field)
+		return 0.5;
+
+	return 1.;
 }
 
 void NativeMapBackend::startTile(int playerId, int& x, int& y)
 {
-	x = 4;
-	y = 4;
+	if (playerId == 0) {
+		x = 4;
+		y = 0;
+	}
+	else {
+		x = 0;
+		y = 4;
+	}
 }
 
 int NativeMapBackend::distanceTo(int srcX, int srcY, int dstX, int dstY)
@@ -70,9 +95,9 @@ void NativeMapBackend::cubeToOffset(int cx, int cy, int cz, int& x, int& y)
 
 //////////////////
 
-NativeMapBackend* NativeMapBackend_new(int size)
+NativeMapBackend* NativeMapBackend_new(int size, int seed)
 {
-	return new NativeMapBackend(size);
+	return new NativeMapBackend(size, seed);
 }
 
 void NativeMapBackend_delete(NativeMapBackend* self)
@@ -90,9 +115,9 @@ TileType NativeMapBackend_tileType(NativeMapBackend* self, int x, int y)
 	return self->tileType(x, y);
 }
 
-bool NativeMapBackend_canMoveTo(NativeMapBackend* self, FactionType faction, int srcX, int srcY, int dstX, int dstY)
+double NativeMapBackend_moveCost(NativeMapBackend* self, FactionType faction, int srcX, int srcY, int dstX, int dstY)
 {
-	return self->canMoveTo(faction, srcX, srcY, dstX, dstY);
+	return self->moveCost(faction, srcX, srcY, dstX, dstY);
 }
 
 void NativeMapBackend_startTile(NativeMapBackend* self, int playerId, int& x, int& y)

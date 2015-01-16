@@ -14,15 +14,15 @@ namespace SCvLib
             Map map;
             if (MapType.Demo == mapType)
             {
-                map = new Map(6, 5);
+                map = new Map(6, 5, 1);
             }
             else if (MapType.Demo == mapType)
             {
-                map = new Map(10, 20);
+                map = new Map(10, 20, 6);
             }
             else
             {
-                map = new Map(14, 30);
+                map = new Map(14, 30, 8);
             }
 
             var g = new Game
@@ -31,6 +31,8 @@ namespace SCvLib
                 Player2 = new Player() {Name = players[1].Item1, Faction = players[1].Item2, Score = 0},
                 Map = map,
             };
+
+            g.CreateUnits();
 
             return g;
         }

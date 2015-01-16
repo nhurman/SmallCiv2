@@ -16,6 +16,7 @@ namespace SCvLib
         ITile CreateMountainTile(int x, int y);
     }
 
+    [Serializable]
     public class TileFactory : ITileFactory
     {
         public TileFactory()

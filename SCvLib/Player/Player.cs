@@ -9,6 +9,8 @@ namespace SCvLib
     {
 
     }
+
+    [Serializable]
     public class Player : IPlayer
     {
         public FactionType Faction;

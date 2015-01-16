@@ -24,7 +24,7 @@
             <Rectangle Fill="White" Stroke="#000000" Width="95" Height="140"/>
             <Label Content="Paused" Canvas.Left="10" Canvas.Top="10" HorizontalContentAlignment="Center" Width="75"/>
             <Button Content="Resume" Canvas.Left="10" Canvas.Top="50" Width="75" Click="Resume_Click"></Button>
-            <Button Content="Save" Canvas.Left="10" Canvas.Top="80" Width="75"></Button>
+            <Button Content="Save" Canvas.Left="10" Canvas.Top="80" Width="75" Click="Save_Click"></Button>
             <Button Content="Main Menu" Canvas.Left="10" Canvas.Top="110" Width="75" Click="MainMenu_Click"></Button>
         </Canvas>
 
