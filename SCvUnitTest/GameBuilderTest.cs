@@ -21,7 +21,7 @@ namespace SCvUnitTest
             p1.Faction = FactionType.Orcs;
             p1.Name = "C";
             p1.Score = 0;
-            Game g = GameBuilder.New(MapType.Demo, p1, p2);
+            IGame g = GameBuilder.New(MapType.Demo, p1, p2);
 
             Assert.AreEqual(g.Map.Width, 6);
             Assert.AreEqual(g.Map.Turns, 5);

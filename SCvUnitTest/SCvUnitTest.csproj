@@ -50,8 +50,16 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="GameBuilderTest.cs" />
+    <Compile Include="GameTests.cs" />
+    <Compile Include="MapTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SCvLib\SCvLib.csproj">
+      <Project>{9091e810-33c5-44c3-b513-c864a4f28edc}</Project>
+      <Name>SCvLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
