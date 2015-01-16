@@ -29,7 +29,7 @@ void NativeMapBackend::generate()
 	setProbas();
 	setStartTiles();
 	int rd, type;
-	Point tmp = { 0, 0 };
+	int px = 0, py = 0;
 	m_storage->resize(m_size);
 	for (int y = 0; y < m_size; y++)
 	{
@@ -37,13 +37,13 @@ void NativeMapBackend::generate()
 		for (int x = 0; x < m_size; x++)
 		{
 			rd = rand() % 100;
-			type = selectType(rd, Point(x, y));
+			type = selectType(rd, x, y);
 			switch (type)
 			{
 			case TileType::Desert:
 				if (nbDesertLeft == 0)
 				{
-					if ((*m_probas)[y][x][TileType::Desert] == 100) { setProbas(tmp, TileType::Desert, 0); }
+					if ((*m_probas)[y][x][TileType::Desert] == 100) { setProbas(px, py, TileType::Desert, 0); }
 					x--;
 					continue;
 				}
@@ -56,7 +56,7 @@ void NativeMapBackend::generate()
 			case TileType::Forest:
 				if (nbForestLeft == 0)
 				{
-					if ((*m_probas)[y][x][TileType::Forest] == 100) { setProbas(tmp, TileType::Forest, 0); }
+					if ((*m_probas)[y][x][TileType::Forest] == 100) { setProbas(px, py, TileType::Forest, 0); }
 					x--;
 					continue;
 				}
@@ -69,7 +69,7 @@ void NativeMapBackend::generate()
 			case TileType::Mountain:
 				if (nbMountainLeft == 0)
 				{
-					if ((*m_probas)[y][x][TileType::Mountain] == 100) { setProbas(tmp, TileType::Mountain, 0); }
+					if ((*m_probas)[y][x][TileType::Mountain] == 100) { setProbas(px, py, TileType::Mountain, 0); }
 					x--;
 					continue;
 				}
@@ -82,7 +82,7 @@ void NativeMapBackend::generate()
 			case TileType::Field:
 				if (nbPlainLeft == 0)
 				{
-					if ((*m_probas)[y][x][TileType::Field] == 100) { setProbas(tmp, TileType::Field, 0); }
+					if ((*m_probas)[y][x][TileType::Field] == 100) { setProbas(px, py, TileType::Field, 0); }
 					x--;
 					continue;
 				}
@@ -132,12 +132,12 @@ float NativeMapBackend::moveCost(FactionType faction, int srcX, int srcY, int ds
 void NativeMapBackend::startTile(int playerId, int& x, int& y)
 {
 	if (playerId == 0) {
-		x = m_startTileA.x;
-		y = m_startTileA.y;
+		x = m_startTileAX;
+		y = m_startTileAY;
 	}
 	else {
-		x = m_startTileB.x;
-		y = m_startTileB.y;
+		x = m_startTileBX;
+		y = m_startTileBY;
 	}
 }
 
@@ -174,14 +174,13 @@ void NativeMapBackend::setProbas()
 	{
 		x = rand() % m_size;
 		y = rand() % m_size;
-		Point coord = { x, y };
 		if (!(*m_modified)[y][x])
 		{
 			type = rand() % 4;
-			setProbas(coord, type, 100);
+			setProbas(x, y, type, 100);
 			(*m_modified)[y][x] = true;
 			m_leftToModify--;
-			expandProbaToNeighbors(coord, 80, type);
+			expandProbaToNeighbors(x, y, 80, type);
 		}
 	}
 }
@@ -226,22 +225,22 @@ void NativeMapBackend::initializeProbasTo25()
 * Marks all these tiles as modified
 * Then calls itself on every modified tile with a decreased proba until reaching a 40% proba
 */
-void NativeMapBackend::expandProbaToNeighbors(Point origin, int proba, int type)
+void NativeMapBackend::expandProbaToNeighbors(int px, int py, int proba, int type)
 {
 	int a, b;
 	for (int y = -1; y < 2; y++)
 	{
 		for (int x = -1; x < 2; x++)
 		{
-			a = origin.x + x;
-			b = origin.y + y;
-			Point tmp = { a, b };
+			a = px + x;
+			b = py + y;
+			int tx = 0, ty = 0;
 			if (a >= 0 && a<m_size && b >= 0 && b<m_size && !(*m_modified)[b][a])
 			{
-				(*m_modified)[origin.y + y][origin.x + x] = true;
-				setProbas(tmp, type, proba);
+				(*m_modified)[py + y][px + x] = true;
+				setProbas(tx, ty, type, proba);
 				m_leftToModify--;
-				if (proba >= 60) expandProbaToNeighbors(tmp, proba - 20, type);
+				if (proba >= 60) expandProbaToNeighbors(tx, ty, proba - 20, type);
 			}
 		}
 	}
@@ -249,13 +248,13 @@ void NativeMapBackend::expandProbaToNeighbors(Point origin, int proba, int type)
 /**
 * Given roll being a number randomly generated between 0 and 99, returns the type that will be affected at the tile at position Pos
 */
-int NativeMapBackend::selectType(int roll, Point pos)
+int NativeMapBackend::selectType(int roll, int px, int py)
 {
 	int cumulativeProbas[4];
-	cumulativeProbas[0] = (*m_probas)[pos.y][pos.x][0];
-	cumulativeProbas[1] = cumulativeProbas[0] + (*m_probas)[pos.y][pos.x][1];
-	cumulativeProbas[2] = cumulativeProbas[1] + (*m_probas)[pos.y][pos.x][2];
-	cumulativeProbas[3] = cumulativeProbas[2] + (*m_probas)[pos.y][pos.x][3];
+	cumulativeProbas[0] = (*m_probas)[py][px][0];
+	cumulativeProbas[1] = cumulativeProbas[0] + (*m_probas)[py][px][1];
+	cumulativeProbas[2] = cumulativeProbas[1] + (*m_probas)[py][px][2];
+	cumulativeProbas[3] = cumulativeProbas[2] + (*m_probas)[py][px][3];
 	for (int i = 0; i < 4; i++)
 	{
 		if (roll < cumulativeProbas[i] - 1)
@@ -298,24 +297,24 @@ void NativeMapBackend::setStartTiles()
 	default:
 		break;
 	}
-	m_startTileA = { xA, yA };
-	m_startTileB = { xB, yB };
+	m_startTileAX = xA; m_startTileAY = yA;
+	m_startTileBX = xB; m_startTileBY = yB;
 }
 
-void NativeMapBackend::setProbas(Point p, int type, int proba)
+void NativeMapBackend::setProbas(int px, int py, int type, int proba)
 {
 	int count = 0;
 	for (int i = 0; i < 4; i++)
 	{
-		if (i == type) (*m_probas)[p.y][p.x][i] = proba;
-		else (*m_probas)[p.y][p.x][i] = (100 - proba) / 3;
-		count += (*m_probas)[p.y][p.x][i];
+		if (i == type) (*m_probas)[py][px][i] = proba;
+		else (*m_probas)[py][px][i] = (100 - proba) / 3;
+		count += (*m_probas)[py][px][i];
 	}
 	if (count < 100)
 	{
 		for (int i = 0; i < 4; i++)
 		{
-			if ((*m_probas)[p.y][p.x][i] != 0) { (*m_probas)[p.y][p.x][i] += (100 - count); }
+			if ((*m_probas)[py][px][i] != 0) { (*m_probas)[py][px][i] += (100 - count); }
 		}
 	}
 }

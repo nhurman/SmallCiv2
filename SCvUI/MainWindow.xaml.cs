@@ -24,7 +24,7 @@ namespace SCvUI
     {
         public static MainWindow Instance;
 
-        private Game _game;
+        private IGame _game;
         private bool _isPaused;
         private Point _panDirection;
         private DispatcherTimer _panTimer;
@@ -232,6 +232,8 @@ namespace SCvUI
 
         private void OnGameEnded()
         {
+            OnPause();
+            
             if (_game.Player1.Score > _game.Player2.Score)
             {
                 MessageBox.Show(string.Format("{0} wins!", _game.Player1.Name));

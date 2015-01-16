@@ -79,6 +79,8 @@ namespace SCvLib
 
         public void AttackOrMoveTo(ITile dest)
         {
+            if (HP <= 0) return;
+
             if (Game.Instance.CurrentPlayerId != PlayerId) return;
 
             if (Tile == dest) return;
@@ -156,7 +158,7 @@ namespace SCvLib
             Faction = FactionType.Elves;
         }
 
-        virtual public void OnFightLost()
+        override public void OnFightLost()
         {
             int rnd = Game.Instance.Random.Next(0, 2);
             if (1 == rnd)

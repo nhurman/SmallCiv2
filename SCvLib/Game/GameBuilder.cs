@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
+using System.Xml.Serialization;
 
 namespace SCvLib
 {
@@ -11,9 +12,9 @@ namespace SCvLib
     {
         private const string SAVE_PATH = "save.bin";
 
-        public static Game New(MapType mapType, Player p1, Player p2)
+        public static IGame New(MapType mapType, IPlayer p1, IPlayer p2)
         {
-            var g = new Game
+            IGame g = new Game
             {
                 Player1 = p1,
                 Player2 = p2,
@@ -40,7 +41,7 @@ namespace SCvLib
             return g;
         }
 
-        public static void Save(Game g)
+        public static void Save(IGame g)
         {
             var formatter = new BinaryFormatter();
             try
@@ -58,24 +59,24 @@ namespace SCvLib
                     {
                         File.Delete(SAVE_PATH);
                     }
-                    catch (IOException f)
+                    catch (IOException)
                     {
                     }
                 }
             }
         }
 
-        public static Game Load()
+        public static IGame Load()
         {
             var formatter = new BinaryFormatter();
-            Game g = null;
+            IGame g = null;
 
             if (File.Exists(SAVE_PATH))
             {
                 try
                 {
                     FileStream fileStream = new FileStream(SAVE_PATH, FileMode.Open, FileAccess.Read);
-                    g = (Game)formatter.Deserialize(fileStream);
+                    g = (IGame)formatter.Deserialize(fileStream);
                     fileStream.Close();
                     g.OnDeserialize();
                 }
