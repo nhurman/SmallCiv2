@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<useCaseModelRoot xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/dsltools/SimpleShapesModel" dslVersion="1.0.0.0" Id="0751bcbd-0019-4c9f-b713-acab42453179" name="GameTurn" linkedPackageId="21634fb9-5e4a-44b8-9f99-e66b0f5c52de" xmlns="http://schemas.microsoft.com/dsltools/UseCaseModel">
+  <profileInstances>
+    <packageHasProfileInstances Id="06ecf253-bccd-4821-b206-be19499808f5">
+      <profileInstance Id="dad4a2e6-2f7a-4386-b7e8-b647c91f7c36" name="StandardProfileL2">
+        <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+      </profileInstance>
+      <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances Id="e5d4bd63-40d7-4e20-a477-c83f2d8dd79a">
+      <profileInstance Id="30983d00-717d-470e-8f59-e57a5192c261" name="StandardProfileL3">
+        <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+      </profileInstance>
+      <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+    </packageHasProfileInstances>
+  </profileInstances>
+  <packagedElements>
+    <useCaseModelRootHasTypes>
+      <actor Id="b31dd4c5-ce98-4770-9e63-2285a935a5f3" name="Player" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="982c6505-d7d0-4800-8c0c-d144d23c912d" />
+        <targetEnds>
+          <association Id="5f3c7dc5-e18c-40c1-9fd9-8faa251e265a" isDerived="false" sourceEndRoleName="Player" targetEndRoleName="End Turn" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="694a0c78-8b9d-4127-8e43-f18eb0d86012" LastKnownName="End Turn" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="fc315583-5b5a-4c8c-9803-c428de52fa1b" name="Player" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="00dec8f1-d4a6-43a9-af18-f2a5e99e6618" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="226c0847-fef9-4918-b934-8746eca28942" name="End Turn" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="bb0cf215-4bd5-4ad3-8e94-e2a6e69f283b" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="8fc81a72-0e9c-432c-8b7e-a6c56304d8a9" />
+          </association>
+          <association Id="24f0dda6-7ae8-41a6-9b9e-abb0f19f7872" isDerived="false" sourceEndRoleName="Player" targetEndRoleName="Select Tile" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="49e1355f-fe6c-49d0-8d1e-b4fc34a1665e" LastKnownName="Select Tile" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="ddfc411c-a9cb-4b72-9c58-151ddcf32620" name="Player" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="53fd8d4a-2898-4fdf-b198-d53f8b9ede80" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="057b4c0e-6472-4cb1-ace1-32f199a92806" name="Select Tile" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="dc872987-50b8-4b7f-a99e-702afe4154fc" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="1ce02db7-cc85-43a7-a6c6-f285cbb8a019" />
+          </association>
+        </targetEnds>
+      </actor>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="694a0c78-8b9d-4127-8e43-f18eb0d86012" name="End Turn" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="c5123345-3b48-430d-8642-c8f41ee6d20b" />
+      </useCase>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="c3deccf3-1063-45da-98fc-9b8fff08377c" name="Issue Command" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="f321f742-6314-406e-b40f-f6172e3b68ba" />
+        <suppliersInternal>
+          <dependency Id="893f49ea-ed49-4743-abe0-cbaece50e19f">
+            <useCaseMoniker Id="3f5e42f7-ab05-4dc3-a376-d0086c043602" LastKnownName="Select Unit" />
+            <elementDefinition Id="6d8afc86-4438-4168-96b6-b08c6ff77af9" />
+          </dependency>
+        </suppliersInternal>
+      </useCase>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="f58b0bed-6645-4af7-a3f5-042bfd8ebdc3" name="Move" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="5efdc1c3-9cfd-4ac9-bcc9-779b21cc81fd" />
+        <extendedCases>
+          <extend Id="50e90dbf-aa39-4fcd-868a-b561576a7d71">
+            <useCaseMoniker Id="c3deccf3-1063-45da-98fc-9b8fff08377c" LastKnownName="Issue Command" />
+            <elementDefinition Id="a3e77989-1478-4037-bd6f-98662a074cdd" />
+          </extend>
+        </extendedCases>
+        <additions>
+          <include Id="0522c3fb-ab26-42f0-862a-da9e029a20ce">
+            <useCaseMoniker Id="b0345491-dcfb-49cf-a465-c459f7ef9d85" LastKnownName="Select Destination" />
+            <elementDefinition Id="425a06a7-fe89-414a-9295-f90a03eea135" />
+          </include>
+        </additions>
+      </useCase>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="b2fc75d0-4f32-4c16-8b09-89f00c76f684" name="Attack" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="c3891849-6172-436a-8657-19fb659a658e" />
+        <extendedCases>
+          <extend Id="63606852-7870-4ef5-9bc9-58ceaaae0ecb">
+            <useCaseMoniker Id="c3deccf3-1063-45da-98fc-9b8fff08377c" LastKnownName="Issue Command" />
+            <elementDefinition Id="ed9b4463-be11-42b7-ab98-f7c2de9aaabb" />
+          </extend>
+        </extendedCases>
+        <additions>
+          <include Id="cbce72e4-c1e6-457e-b44a-33209718ed5e">
+            <useCaseMoniker Id="b0345491-dcfb-49cf-a465-c459f7ef9d85" LastKnownName="Select Destination" />
+            <elementDefinition Id="5296a9d6-ac75-4a58-be99-9d3c06ebe683" />
+          </include>
+        </additions>
+      </useCase>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="b0345491-dcfb-49cf-a465-c459f7ef9d85" name="Select Destination" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="d467fdd7-d526-43eb-8d23-c219a81e3ee3" />
+      </useCase>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="49e1355f-fe6c-49d0-8d1e-b4fc34a1665e" name="Select Tile" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="49eca689-48a1-4590-b632-eceb9ff977b0" />
+        <additions>
+          <include Id="e24bd410-6245-4d4a-a8f7-e7076e45e19d">
+            <useCaseMoniker Id="3f5e42f7-ab05-4dc3-a376-d0086c043602" LastKnownName="Select Unit" />
+            <elementDefinition Id="aebe257c-238f-4379-abc3-32af8d26e140" />
+          </include>
+        </additions>
+      </useCase>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="3f5e42f7-ab05-4dc3-a376-d0086c043602" name="Select Unit" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="d329dec3-115f-483d-8ea4-951be48cb512" />
+      </useCase>
+    </useCaseModelRootHasTypes>
+  </packagedElements>
+  <package Id="21634fb9-5e4a-44b8-9f99-e66b0f5c52de" name="Modeling">
+    <elementDefinition Id="1be8b4b0-f16e-491b-8bb3-5e2b68ca8e5a" />
+  </package>
+</useCaseModelRoot>

@@ -1,22 +1,64 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="SCvLib.Game" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="8.25" Y="1" Width="1.5" />
+  <Class Name="SCvLib.Dwarf" Collapsed="true">
+    <Position X="6" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAACAAAAAAAAAAwAACAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Unit\Unit.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SCvLib.Elf" Collapsed="true">
+    <Position X="8.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Unit\Unit.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SCvLib.Game" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="13" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAADAAAAAAwUACAACAAAARBAAAQAAAAAAAAAA=</HashCode>
       <FileName>Game\Game.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="SCvLib.GameBuilder" Collapsed="true">
-    <Position X="10" Y="1" Width="1.5" />
+    <Position X="14.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAgIAAAAAAACAAAAAAAAAAAAAAAAAgAAAAAAAAAAA=</HashCode>
       <FileName>Game\GameBuilder.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="SCvLib.Map" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="16.5" Y="0.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Struct Name="SCvLib.Map.Point" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Map\Map.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>QQAQAAAAAgAAAAAAEAAAAEEAAAAAAAIAEEAAAAAAAAA=</HashCode>
+      <FileName>Map\Map.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="SCvLib.Orc" Collapsed="true">
+    <Position X="10.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Unit\Unit.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
   <Class Name="SCvLib.Player" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="11.75" Y="1" Width="1.5" />
+    <Position X="13" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAgAAAAAAAQAAAAAAAAAQAAAAAAAAAA=</HashCode>
       <FileName>Player\Player.cs</FileName>
@@ -24,66 +66,102 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="SCvLib.Tile" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="8.25" Y="2" Width="1.5" />
+    <Position X="14.75" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQEAAAAAAYAA=</HashCode>
+      <HashCode>BAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAEUEAAAAAAYAA=</HashCode>
       <FileName>Map\Tile.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="SCvLib.Unit" Collapsed="true">
-    <Position X="3.5" Y="1" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAACAACAAAAQAQACAAAAAQACAAgAAAAA=</HashCode>
-      <FileName>Unit\Unit.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="SCvLib.Elf">
-    <Position X="1.25" Y="2.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Unit\Unit.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="SCvLib.Dwarf">
-    <Position X="3.5" Y="2.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Unit\Unit.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="SCvLib.Orc">
-    <Position X="5.75" Y="2.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Unit\Unit.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="SCvLib.TileFactory" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="10" Y="2" Width="1.5" />
+    <Position X="16.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAEIAAAAAQAAAAAAAAAAAABAAAAAEAAAAAAAAAAAAA=</HashCode>
       <FileName>Map\TileFactory.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Enum Name="SCvLib.FactionType" Collapsed="true">
-    <Position X="8.25" Y="3.25" Width="1.5" />
+  <Class Name="SCvLib.Unit" Collapsed="true">
+    <Position X="8.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAQAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAQAAA=</HashCode>
+      <HashCode>AQEEAAAAAgAAgACAACAAAAQAQACAAAAAQAIIAgAAAQA=</HashCode>
+      <FileName>Unit\Unit.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="SCvLib.UnitFactory" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="13" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAgAAAAAAAAAAAAAAAAAIAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Unit\UnitFactory.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Interface Name="SCvLib.IGame" Collapsed="true">
+    <Position X="13" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAADAAAAAAwEACAACAAAARBAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game\Game.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SCvLib.IMap" Collapsed="true">
+    <Position X="14.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAgAAAAAAEAAAAEAAAAAAAAIAEEAAAAAAAAA=</HashCode>
+      <FileName>Map\Map.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SCvLib.IPlayer" Collapsed="true">
+    <Position X="16.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAgAAAAAAAQAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Player\Player.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SCvLib.ITile" Collapsed="true">
+    <Position X="13" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAEUEAAAAAAYAA=</HashCode>
+      <FileName>Map\Tile.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SCvLib.ITileFactory" Collapsed="true">
+    <Position X="14.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEIAAAAAQAAAAAAAAAAAABAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Map\TileFactory.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SCvLib.IUnit" Collapsed="true">
+    <Position X="16.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQEEAAAAAgAAgACAACAAAAQAQACAAAAAQAIIAgAAAQA=</HashCode>
+      <FileName>Unit\Unit.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="SCvLib.IUnitFactory" Collapsed="true">
+    <Position X="13" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAgAAAAAAAAAAAAAAAAAIAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Unit\UnitFactory.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="SCvLib.FactionType" Collapsed="true">
+    <Position X="13" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAAAAAAAAAAAAAAAAAAAAAAACAAAAAAEQAAA=</HashCode>
       <FileName>Faction\Faction.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="SCvLib.MapType" Collapsed="true">
-    <Position X="10" Y="3.25" Width="1.5" />
+    <Position X="14.75" Y="6.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAABAAAAIAAAAAAAEAAAAAAA=</HashCode>
       <FileName>Map\Map.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="SCvLib.TileType" Collapsed="true">
-    <Position X="11.75" Y="3.25" Width="1.5" />
+    <Position X="16.5" Y="6.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAIAAAAAACAAAAAAAAAAAAAEAAAAAAAAAAAAAAgAA=</HashCode>
       <FileName>Map\Tile.cs</FileName>

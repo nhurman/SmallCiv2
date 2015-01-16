@@ -30,7 +30,7 @@ namespace SCvUI
 
             if (MainWindow.Instance.SelectedUnit == Unit)
             {
-                this.Background.Fill = new SolidColorBrush(Colors.LightBlue);
+                this.BgRect.Fill = new SolidColorBrush(Colors.White);
             }
 
             switch (Unit.Faction)

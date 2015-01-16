@@ -20,7 +20,7 @@
             <ColumnDefinition Width="30"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         
-        <Rectangle x:Name="Background" Fill="White" Grid.Column="0" Grid.ColumnSpan="5"></Rectangle>
+        <Rectangle x:Name="BgRect" Fill="Transparent" Grid.Column="0" Grid.ColumnSpan="5"></Rectangle>
 
         <Image x:Name="Image" Source="{DynamicResource ElfImage}" Width="40" Grid.Column="0"></Image>
         <Label Grid.Column="1" Content="HP" HorizontalAlignment="Left"></Label>

@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
+using System.Xml.Serialization;
 
 namespace SCvLib
 {
@@ -11,9 +12,9 @@ namespace SCvLib
     {
         private const string SAVE_PATH = "save.bin";
 
-        public static Game New(MapType mapType, Player p1, Player p2)
+        public static IGame New(MapType mapType, IPlayer p1, IPlayer p2)
         {
-            var g = new Game
+            IGame g = new Game
             {
                 Player1 = p1,
                 Player2 = p2,
@@ -40,42 +41,42 @@ namespace SCvLib
             return g;
         }
 
-        public static void Save(Game g)
+        public static void Save(IGame g, string path = "save.scv")
         {
             var formatter = new BinaryFormatter();
             try
             {
-                FileStream fileStream = new FileStream(SAVE_PATH, FileMode.Create, FileAccess.Write);
+                FileStream fileStream = new FileStream(path, FileMode.Create, FileAccess.Write);
                 formatter.Serialize(fileStream, g);
                 fileStream.Close();
             }
             catch (Exception e)
             {
                 Console.WriteLine(string.Format("Could not write save file: {0}", e.Message));
-                if (File.Exists(SAVE_PATH))
+                if (File.Exists(path))
                 {
                     try
                     {
-                        File.Delete(SAVE_PATH);
+                        File.Delete(path);
                     }
-                    catch (IOException f)
+                    catch (IOException)
                     {
                     }
                 }
             }
         }
 
-        public static Game Load()
+        public static IGame Load(string path = "save.scv")
         {
             var formatter = new BinaryFormatter();
-            Game g = null;
+            IGame g = null;
 
-            if (File.Exists(SAVE_PATH))
+            if (File.Exists(path))
             {
                 try
                 {
-                    FileStream fileStream = new FileStream(SAVE_PATH, FileMode.Open, FileAccess.Read);
-                    g = (Game)formatter.Deserialize(fileStream);
+                    FileStream fileStream = new FileStream(path, FileMode.Open, FileAccess.Read);
+                    g = (IGame)formatter.Deserialize(fileStream);
                     fileStream.Close();
                     g.OnDeserialize();
                 }

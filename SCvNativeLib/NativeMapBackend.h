@@ -25,8 +25,6 @@ enum TileType
 	#define DLLSPEC __declspec(dllimport)
 #endif
 
-struct Point { int x; int y; Point(int a=0, int b=0) :x(a), y(b) {} };
-
 class DLLSPEC NativeMapBackend
 {
 public:
@@ -47,20 +45,22 @@ private:
 	vector<vector<vector<int>>>* m_probas;
 	vector<vector<bool>>* m_modified;
 
-	Point m_startTileA;
-	Point m_startTileB;
+	int m_startTileAX;
+	int m_startTileAY;
+	int m_startTileBX;
+	int m_startTileBY;
 
 	int m_leftToModify;
 
 	void offsetToCube(int x, int y, int& cx, int& cy, int& cz);
 
 	void setProbas();
-	void setProbas(Point p, int type, int proba);
+	void setProbas(int px, int py, int type, int proba);
 	void initializeModifiedToFalse();
 	void initializeProbasTo25();
 	void setStartTiles();
-	int selectType(int roll, Point pos);
-	void expandProbaToNeighbors(Point origine, int proba, int type);
+	int selectType(int roll, int px, int py);
+	void expandProbaToNeighbors(int px, int py, int proba, int type);
 };
 
 extern "C"

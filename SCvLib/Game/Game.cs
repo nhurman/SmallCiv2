@@ -52,6 +52,7 @@ namespace SCvLib
 
         public void OnDeserialize()
         {
+            Game.Instance = this;
             Random = new Random(Seed);
             if (Map != null)
                 Map.OnDeserialize();
