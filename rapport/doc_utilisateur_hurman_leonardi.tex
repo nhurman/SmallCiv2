@@ -1,0 +1,47 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage{exptech}
+\usepackage{textcomp}
+\usepackage{graphicx}
+\usepackage{array}
+\usepackage[babel=true]{csquotes}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{wrapfig}
+\usepackage[export]{adjustbox}
+\usepackage{titletoc}
+
+\hypersetup{
+  pdftitle={SmallCiv_documentation utilisateur_Hurman_Leonardi}, % title
+  pdfnewwindow=true, % links in new window
+  colorlinks=true, % false: boxed links; true: colored links
+  linkcolor=black, % color of internal links (change box color with linkbordercolor)
+  citecolor=cyan, % color of links to bibliography
+  filecolor=cyan, % color of file links
+  urlcolor=cyan % color of external links
+}
+\author{
+  Nicolas \textsc{Hurman}, Alexandre \textsc{Leonardi} \\ \\
+  INSA de Rennes \\
+  4INFO, groupe 2.2
+}
+
+\title{\textbf{Small Civ}\newline
+Documentation utilisateur}
+
+\date{16 Janvier 2015}
+
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+
+\newpage
+\tableofcontents
+\pagebreak
+
+\input{presentation.tex}
+\pagebreak
+\input{regles.tex}
+\pagebreak
+\input{tuto.tex}
+
+\end{document}

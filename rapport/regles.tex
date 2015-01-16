@@ -1,0 +1,44 @@
+\section{Règles du jeu}
+
+\subsection{Présentation des unités et des races}
+Les unités dans SmallCiv sont standard : quelle que soit leur race, elles auront les mêmes statistiques. Une unité dispose de 2 d'attaque, 1 d'armure, 5 PV (points de vie) et 1 de déplacement, c'est-à-dire que sauf cas impliquant des bonus raciaux, une unité ne peut faire qu'une action par tour, déplacement ou attaque, car les attaques nécessitent un point de déplacement. \newline
+
+Les joueurs ont 3 races à leur disposition :\newline
+\begin{itemize}\renewcommand{\labelitemi}{$\bullet$}
+\item \textbf{Les elfes} peuvent se déplacer sur une forêt pour 0,5 points de mouvement mais le mouvement vert un désert leur coûte 2 ; de plus, ils ont 1 chance sur 2 de survivre avec 1 PV à un coup qui aurait dû s'avérer mortel.
+\item \textbf{Les orcs} peuvent se déplacer sur une plaine pour 0,5, mais en contrepartie les forêts occupées ne leur rapportent pas de points. Leur dernière capacité est de gagner 1 point d'attaque à chaque adversaire tué.
+\item \textbf{Les nains} peuvent aussi se déplacer sur une plaine à coût réduit de moitié, mais ce sont celles-ci qui ne leur rapportent rien en contrepartie. En revanche, ils peuvent se déplacer de montagne en montagne comme si elles étaient adjacentes.
+\end{itemize}
+
+\subsection{Génération de la carte}
+La carte du monde est générée aléatoirement à chaque début de partie. Le hasard n'est pas complet cependant car l'algorithme de génération favorise des ilôts regroupant plusieurs tuiles de même type. Ces tuiles sont au nombre de 4:\newline
+\begin{itemize}
+\item Montagne
+\item Forêt
+\item Plaine 
+\item Désert
+\end{itemize}
+Outre les bonus/malus raciaux présentés plus haut, les cases sont toutes équivalentes. Toutes les cases occupées par au moins une unité d'un joueur lui rapportent 1 point à la fin de chaque tour. \newline
+
+Les cartes de SmallCiv peuvent être de 3 tailles différentes :\newline
+\begin{itemize}\renewcommand{\labelitemi}{$\bullet$}
+\item \textbf{Démo}, une carte de 6x6 tuiles, la partie se joue en 5 tours maximum et chaque joueur commence avec 4 unités
+\item \textbf{Petite}  10x10 tuiles et 20 tours pour 6 unités par joueur
+\item \textbf{Normale} 14x14, 30 tours et 8 unités
+\end{itemize}
+Une carte contiendra toujours le même nombre de tuiles de chaqque type, quelle que soit leur répartition. De plus, en début de partie, les troupes de chaque joueur sont regroupées sur une tuile dans 2 coins de la carte opposés. 
+
+\subsection{Mouvements}
+Comme nous l'avons dit plus tôt, chaque unité dispose d'1 point de mouvement. Cela signifie que dans la plupart des cas, une unité doit choisir entre déplacement ou combat pour un tour donné. Ce n'est cependant pas systématique car plusieurs cas de bonus surviennent, où un déplacement/une attaque ne coûte que 0,5. Cela signifie que rien n'empêche un elfe de faire 2 déplacements en 1 tour s'il suit une ligne de forêts.\newline
+En revanche, les points non utilisés ne se cumulent pas d'un tour sur l'autre, ils sont perdus, ce qui implique que les déserts resteront inaccessibles aux elfes quoi qu'il arrive. 
+
+\subsection{Combats}
+On ne peut combattre qu'une tuile adjacente à la sienne, et à condition d'avoir assez de points de déplacement pour s'y déplacer en cas de victoire (cf plus loin). Il y a plusieurs phases successives dans un combat. \newline
+
+Tout d'abord, le choix de l'unité-défenseur. Dans le cas de l'attaquant, c'est le joueur qui choisit quelle unité porte le coup, mais pour le défenseur c'est celle se trouvant sur la tuile ciblée et ayant l'armure la plus élevée (choisie au hasard en cas d'égalité) qui fait office de champion. \newline
+
+Ensuite, le nombre de rounds qui se dérouleront est calculé. Il s'agit d'un nombre aléatoire compris entre 3 et (PV de l'unité ayant le plus de vie)+2, et le combat s'arrête si tous les rounds sont joués, ou si l'une des 2 unités meurt.\newline
+
+Enfin, la résolution des combats à proprement parler. A chaque round une des 2 unités reçoit une blessure. La probabilité pour chacune d'elles d'être blessée dépend de la différence entre attaque de l'attaquant et défense du défenseur, du pourcentage de PV restant de chaque unité (une blessure entraîne un malus qui augmente avec la gravité de la blessure), et d'une part de hasard car à statistiques égales, la probabilité pour chacune des unités de recevoir la blessure est de 50\%.\newline
+
+Si l'unité-défenseur est tuée, et qu'aucune autre unité ne se trouvait sur la tuile, l'unité-attaquant se déplace sur cette tuile. Sinon, aucune des unités ne bouge, mais même s'il n'est pas effectué, le coût du déplacement est payé par l'attaquant. 
