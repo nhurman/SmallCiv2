@@ -5,9 +5,11 @@
         Title="SmallCiv" Height="475" Width="615">
 
     <Grid x:Name="MainGrid">
+
+        <Image Source="Resources/Background.jpg" Stretch="UniformToFill"/>
+
         <!-- MAIN MENU -->
         <Grid x:Name="MainMenu" Visibility="Collapsed">
-            <Image Source="Resources/China.jpg" Stretch="UniformToFill"/>
             <Button x:Name="Exit" Click="Exit_OnClick" Content="Exit" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="75"/>
             <Button x:Name="Load" Click="Load_OnClick" Content="Load" HorizontalAlignment="Right" Margin="0,0,10,40" VerticalAlignment="Bottom"  Width="75"/>
             <Button x:Name="Create" Click="Create_OnClick" Content="Create" HorizontalAlignment="Right" Margin="0,0,10,70" VerticalAlignment="Bottom"  Width="75"/>
@@ -48,11 +50,11 @@
                     <ColumnDefinition Width="50"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="28"/>
+                    <RowDefinition Height="27"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <Rectangle Fill="White" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" Grid.RowSpan="2"></Rectangle>
+                <Rectangle Fill="#FFFFFF" Opacity="0.5" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" Grid.RowSpan="2" Stroke="Black"></Rectangle>
 
                 <Label x:Name="Score1" Content="0" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="0"/>
                 <Label x:Name="Name1" Content="Player1" HorizontalAlignment="Left" Grid.Row="0" Grid.Column="1"/>
@@ -69,11 +71,9 @@
             <scvUi:HexagonGrid Grid.Row="1" x:Name="MapGrid" HexagonSideLength="30">
             </scvUi:HexagonGrid>
 
-            <Button Grid.ZIndex="6" Name="FinishTurn" Content="Finish Turn" Width="73" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,10,10" Click="FinishTurn_Click" Grid.Row="2"/>
-
             <!-- Tile Panel -->
-            <Grid x:Name="UnitInfoGrid"  ZIndex="2" Grid.Row="1" HorizontalAlignment="Right" Width="170">
-                <Rectangle Fill="White"></Rectangle>
+            <Grid x:Name="UnitInfoGrid"  ZIndex="2" Grid.Row="1" HorizontalAlignment="Right" Width="170" Margin="0,20,0,0">
+                <Rectangle Fill="White" Opacity="0.5" ></Rectangle>
                 <Rectangle Stroke="Black" Grid.ZIndex="2"></Rectangle>
                 <Grid x:Name="UnitInfoGridContents" VerticalAlignment="Top">
                     <Grid.RowDefinitions>
@@ -88,6 +88,8 @@
                     </Grid.RowDefinitions>
                 </Grid>
             </Grid>
+
+            <Button x:Name="FinishTurn" Content="Finish Turn" Width="73" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,10,10" Click="FinishTurn_Click" Grid.Row="2"/>
         </Grid>
     </Grid>
 </Window>

@@ -41,23 +41,23 @@ namespace SCvLib
             return g;
         }
 
-        public static void Save(IGame g)
+        public static void Save(IGame g, string path = "save.scv")
         {
             var formatter = new BinaryFormatter();
             try
             {
-                FileStream fileStream = new FileStream(SAVE_PATH, FileMode.Create, FileAccess.Write);
+                FileStream fileStream = new FileStream(path, FileMode.Create, FileAccess.Write);
                 formatter.Serialize(fileStream, g);
                 fileStream.Close();
             }
             catch (Exception e)
             {
                 Console.WriteLine(string.Format("Could not write save file: {0}", e.Message));
-                if (File.Exists(SAVE_PATH))
+                if (File.Exists(path))
                 {
                     try
                     {
-                        File.Delete(SAVE_PATH);
+                        File.Delete(path);
                     }
                     catch (IOException)
                     {
@@ -66,16 +66,16 @@ namespace SCvLib
             }
         }
 
-        public static IGame Load()
+        public static IGame Load(string path = "save.scv")
         {
             var formatter = new BinaryFormatter();
             IGame g = null;
 
-            if (File.Exists(SAVE_PATH))
+            if (File.Exists(path))
             {
                 try
                 {
-                    FileStream fileStream = new FileStream(SAVE_PATH, FileMode.Open, FileAccess.Read);
+                    FileStream fileStream = new FileStream(path, FileMode.Open, FileAccess.Read);
                     g = (IGame)formatter.Deserialize(fileStream);
                     fileStream.Close();
                     g.OnDeserialize();

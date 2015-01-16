@@ -1,0 +1,238 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<useCaseModelRoot xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/dsltools/SimpleShapesModel" dslVersion="1.0.0.0" Id="fffd468b-7f84-4f57-8dfd-4912ecd8e217" name="GameCreation" linkedPackageId="0aa27c3c-58a6-4271-8fd1-439a217836a1" xmlns="http://schemas.microsoft.com/dsltools/UseCaseModel">
+  <packagedElements>
+    <useCaseModelRootHasTypes>
+      <actor Id="1bed543e-9a4a-42ab-a571-6c9421da4059" name="Player 1" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="26dafd3a-c4a3-406d-902b-3e460b54747b" />
+        <targetEnds>
+          <association Id="95d71872-29cc-42a8-8104-a68589289635" isDerived="false" sourceEndRoleName="Player 1" targetEndRoleName="New Game" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="940de591-cc46-4931-9647-c2ab5988f8cb" LastKnownName="New Game" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="88221097-2e11-4982-a7ef-97667730085d" name="Player 1" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="370da608-0e93-4d84-a00b-4f9bfc9a89c3" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="f09aaaa3-5f7a-431a-9763-2377342944ad" name="New Game" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="5901cf05-58b9-4af3-923b-0189a550e5d5" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="0c3b3b4f-741e-4349-b8ed-e5c671ca1134" />
+          </association>
+          <association Id="75cae481-b1ae-4a7e-bffb-19ca9e49772b" isDerived="false" sourceEndRoleName="Player 1" targetEndRoleName="Load Game" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="14f431e6-fc4c-4fa0-8c5b-4943a12ae7c2" LastKnownName="Load Game" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="afb765f8-9428-4acb-bcce-a6bf0168a07c" name="Player 1" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="595a0dfa-73ff-4263-b6a0-6d1ada2190ce" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="2bc72c71-59f7-424f-a5c1-09bd55fe2672" name="Load Game" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="99b0d3c7-833e-4eb3-9765-c6681ecd2e26" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="7c6bd48e-b560-478a-afcd-653fbfa0f717" />
+          </association>
+        </targetEnds>
+      </actor>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="940de591-cc46-4931-9647-c2ab5988f8cb" name="New Game" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="352f5c3d-36ed-468a-8102-940924d1f6e7" />
+        <additions>
+          <include Id="17340aa2-317d-4dfb-ab69-8b0b736e50ee">
+            <useCaseMoniker Id="288cc904-57ce-49bd-aaf6-e09b65230365" LastKnownName="Map Size" />
+            <elementDefinition Id="11dada85-0d42-44fe-93ff-fd2a1c96353e" />
+          </include>
+          <include Id="d82cbaf7-03fd-4132-b7dc-c924d197a2f7">
+            <useCaseMoniker Id="55dfd31b-0611-4213-a965-948266840afb" LastKnownName="Setup Player" />
+            <elementDefinition Id="20876b97-3187-4833-8ca2-990d1ff93a80" />
+          </include>
+        </additions>
+        <subjects>
+          <subsystemMoniker Id="56d1fbd4-20d9-4c23-a0bf-e252811e07ad" LastKnownName="New Game" />
+        </subjects>
+      </useCase>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="288cc904-57ce-49bd-aaf6-e09b65230365" name="Map Size" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="686098a8-3cdb-41b7-806c-aa2dd5393f0d" />
+        <subjects>
+          <subsystemMoniker Id="56d1fbd4-20d9-4c23-a0bf-e252811e07ad" LastKnownName="New Game" />
+        </subjects>
+      </useCase>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="8dd64a23-0054-44a7-a070-c6ad7731c1eb" name="Select Units" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="3f5c1776-85f3-4e5e-82e9-8a2d70ac68f9" />
+        <subjects>
+          <subsystemMoniker Id="56d1fbd4-20d9-4c23-a0bf-e252811e07ad" LastKnownName="New Game" />
+        </subjects>
+      </useCase>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="ec686d38-2322-42c6-8921-0a350ace7313" name="Enter Name" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="0001c972-67ca-4e4d-bd24-0102eac834c5" />
+        <subjects>
+          <subsystemMoniker Id="56d1fbd4-20d9-4c23-a0bf-e252811e07ad" LastKnownName="New Game" />
+        </subjects>
+      </useCase>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="d4160f65-b9fb-4a94-a34f-4e136a39de43" name="Demo" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="e5005db1-06a4-4ac1-b9ea-a5f38e6b045d" />
+        <extendedCases>
+          <extend Id="0f21fe5f-a3f6-4d38-85ad-c8ae61b70e65">
+            <useCaseMoniker Id="288cc904-57ce-49bd-aaf6-e09b65230365" LastKnownName="Map Size" />
+            <elementDefinition Id="f9255b66-1527-4bfb-8d2a-900bef4100b2" />
+          </extend>
+        </extendedCases>
+        <subjects>
+          <subsystemMoniker Id="56d1fbd4-20d9-4c23-a0bf-e252811e07ad" LastKnownName="New Game" />
+        </subjects>
+      </useCase>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="ae10b152-4a5d-40e3-b4c6-92590c0bea58" name="Small" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="2c9df159-47df-4af8-b6bd-4a28ea4f1e93" />
+        <extendedCases>
+          <extend Id="3d191f2a-46ed-4a75-8b20-2fa3099ca958">
+            <useCaseMoniker Id="288cc904-57ce-49bd-aaf6-e09b65230365" LastKnownName="Map Size" />
+            <elementDefinition Id="83a633dd-72e5-48f0-953a-89579bbc30d0" />
+          </extend>
+        </extendedCases>
+        <subjects>
+          <subsystemMoniker Id="56d1fbd4-20d9-4c23-a0bf-e252811e07ad" LastKnownName="New Game" />
+        </subjects>
+      </useCase>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="594570a9-0044-4a21-ba42-a9227564e843" name="Large" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="866a6669-2246-4821-812a-3770bc8651fa" />
+        <extendedCases>
+          <extend Id="b7d1ab2b-c5c1-4938-9ca1-ded46107e1a6">
+            <useCaseMoniker Id="288cc904-57ce-49bd-aaf6-e09b65230365" LastKnownName="Map Size" />
+            <elementDefinition Id="1765b846-3431-474a-97d5-5b1dd0629536" />
+          </extend>
+        </extendedCases>
+        <subjects>
+          <subsystemMoniker Id="56d1fbd4-20d9-4c23-a0bf-e252811e07ad" LastKnownName="New Game" />
+        </subjects>
+      </useCase>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="55dfd31b-0611-4213-a965-948266840afb" name="Setup Player" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="b6b005bc-1d5a-4146-9e54-b249fc69c412" />
+        <additions>
+          <include Id="ed74d605-39ae-4ef3-8e4e-2cb62fddb47c">
+            <useCaseMoniker Id="ec686d38-2322-42c6-8921-0a350ace7313" LastKnownName="Enter Name" />
+            <elementDefinition Id="a06ed19c-28eb-4e1b-85f7-b95bcfc3641b" />
+          </include>
+          <include Id="fe61f462-a4a6-49e2-883b-980ef27771b3">
+            <useCaseMoniker Id="8dd64a23-0054-44a7-a070-c6ad7731c1eb" LastKnownName="Select Units" />
+            <elementDefinition Id="45cce010-574a-411a-8eb9-e813b5ae0240" />
+          </include>
+        </additions>
+        <subjects>
+          <subsystemMoniker Id="56d1fbd4-20d9-4c23-a0bf-e252811e07ad" LastKnownName="New Game" />
+        </subjects>
+      </useCase>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <actor Id="20649c4a-5b95-4b2b-991c-f44012f00cdc" name="Player 2" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="e7256b97-ca26-404b-9f1a-c8cdad3d780d" />
+        <targetEnds>
+          <association Id="4f066234-030c-4699-8d87-04d78bfb1481" isDerived="false" sourceEndRoleName="Player 2" targetEndRoleName="Setup Player" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="55dfd31b-0611-4213-a965-948266840afb" LastKnownName="Setup Player" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="444ad743-2318-4d8b-aab6-3e281bf2a596" name="Player 2" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="45376efc-b29e-4eac-a080-b4f2ed8b27f5" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="eb64bddc-cbdd-4491-b548-d2f227bad2ab" name="Setup Player" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="9cd0b2d0-419d-47d7-a1ab-9c7b494e0840" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="66766d39-7293-4985-971c-2840f246e4a7" />
+          </association>
+        </targetEnds>
+      </actor>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="cb186506-a518-48e1-9663-6a6207584b10" name="Dwarves" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="d9aa6a52-6c73-40de-9dc1-a57fba588135" />
+        <extendedCases>
+          <extend Id="ebe3614c-32ff-49e9-8dae-6fba5ea5e92f">
+            <useCaseMoniker Id="8dd64a23-0054-44a7-a070-c6ad7731c1eb" LastKnownName="Select Units" />
+            <elementDefinition Id="58c6f1b0-16b1-46a3-9408-d46bef750620" />
+          </extend>
+        </extendedCases>
+        <subjects>
+          <subsystemMoniker Id="56d1fbd4-20d9-4c23-a0bf-e252811e07ad" LastKnownName="New Game" />
+        </subjects>
+      </useCase>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="73848bc1-5bdf-4201-9691-2a0f0522562e" name="Elves" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="36922a71-521b-4953-99e6-b8a1a5a57078" />
+        <extendedCases>
+          <extend Id="b4eb8efb-9360-4c45-8f35-b0c92ed5967b">
+            <useCaseMoniker Id="8dd64a23-0054-44a7-a070-c6ad7731c1eb" LastKnownName="Select Units" />
+            <elementDefinition Id="701b325b-6e62-46bc-bd86-4dd557840d90" />
+          </extend>
+        </extendedCases>
+        <subjects>
+          <subsystemMoniker Id="56d1fbd4-20d9-4c23-a0bf-e252811e07ad" LastKnownName="New Game" />
+        </subjects>
+      </useCase>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="9719b2f8-ff1e-4616-b9ce-5c35709c83cf" name="Orcs" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="ea29bacd-4c21-4b77-8b9b-7dae0afb9621" />
+        <extendedCases>
+          <extend Id="74ee7b97-f943-47e4-81b4-a5336e1d5d3f">
+            <useCaseMoniker Id="8dd64a23-0054-44a7-a070-c6ad7731c1eb" LastKnownName="Select Units" />
+            <elementDefinition Id="be8ef088-8f9b-4c3d-b593-d06d8c9224a1" />
+          </extend>
+        </extendedCases>
+        <subjects>
+          <subsystemMoniker Id="56d1fbd4-20d9-4c23-a0bf-e252811e07ad" LastKnownName="New Game" />
+        </subjects>
+      </useCase>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="14f431e6-fc4c-4fa0-8c5b-4943a12ae7c2" name="Load Game" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="9a689a84-bcb0-4808-83f0-bc464d7822e6" />
+      </useCase>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <subsystem Id="56d1fbd4-20d9-4c23-a0bf-e252811e07ad" name="New Game" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="0c3c8f3a-1447-43dd-9cc4-d861264f9aab" />
+      </subsystem>
+    </useCaseModelRootHasTypes>
+  </packagedElements>
+  <package Id="0aa27c3c-58a6-4271-8fd1-439a217836a1" name="Modeling">
+    <elementDefinition Id="1be8b4b0-f16e-491b-8bb3-5e2b68ca8e5a" />
+    <profileInstances>
+      <packageHasProfileInstances Id="dcca1125-3230-4de4-a820-89b9f8a003ee">
+        <profileInstance Id="42c5f587-e7ff-4e43-b19b-08759538a6cb" name="StandardProfileL2">
+          <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+        </profileInstance>
+        <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+      </packageHasProfileInstances>
+      <packageHasProfileInstances Id="5360b517-6ddf-49bf-8a9a-48a5d6a88f0e">
+        <profileInstance Id="251dbc43-5a61-4457-89de-1e3f64bc83f4" name="StandardProfileL3">
+          <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+        </profileInstance>
+        <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+      </packageHasProfileInstances>
+    </profileInstances>
+  </package>
+</useCaseModelRoot>

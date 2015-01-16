@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<useCaseModelRoot xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm10="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner" dslVersion="1.0.0.0" Id="1560eace-5092-4105-a751-8cc6c63de50a" name="Combat" linkedPackageId="9ddf5a17-34c1-40fe-82c3-9ee375a9f833" xmlns="http://schemas.microsoft.com/dsltools/UseCaseModel">
+  <ownedCommentsInternal>
+    <comment Id="2e2029ae-57be-4f78-ae90-a10dc1950724">
+      <elementDefinition Id="b26af6b4-4945-43c9-9358-39fc1e4116c7" />
+      <body>If there are no more defender on the destination</body>
+      <annotatedElements>
+        <useCaseMoniker Id="ff975c06-3b0a-4c14-81e2-83da23b8e455" LastKnownName="Move to Destination" />
+      </annotatedElements>
+    </comment>
+  </ownedCommentsInternal>
+  <packagedElements>
+    <useCaseModelRootHasTypes>
+      <actor Id="13e60df1-e3a9-45c3-9e9f-42d740a339e6" name="Player" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="fe9dc504-78de-4f7f-b7f8-84732ab0be37" />
+        <targetEnds>
+          <association Id="43f4edeb-41bc-407f-9c29-9a37598a19e5" isDerived="false" sourceEndRoleName="Player" targetEndRoleName="Select Unit" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="4b281ba3-f7b3-47de-a72f-c40ae981c9c5" LastKnownName="Select Unit" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="366de886-feea-492a-98f4-b27e0c81c06e" name="Player" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="e21239e3-42d9-4922-93e8-26b63f3262c0" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="f2fbc23f-94f8-4099-877a-c474e2cb0539" name="Select Unit" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="35c9370d-e366-4581-ade8-afc016a5f309" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="649360c5-500a-4e4a-87f4-72591bbcfee2" />
+          </association>
+        </targetEnds>
+      </actor>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="b47f5eb0-5915-4093-9ebd-8ad9efb8c944" name="Attack" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="6b0c5efc-dfae-48e5-ac9d-4fe6e831d853" />
+      </useCase>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="4c7ab069-bd9a-4d9f-8e77-8fcad41c7bce" name="Select Destination" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="aa025313-62e9-4575-a643-0f68f188b1d4" />
+        <additions>
+          <include Id="c54e743d-3aef-4bd2-ac3e-84ffb836f84c">
+            <useCaseMoniker Id="b47f5eb0-5915-4093-9ebd-8ad9efb8c944" LastKnownName="Attack" />
+            <elementDefinition Id="a812e3e9-7a93-43d7-a417-acd635fd1910" />
+          </include>
+        </additions>
+      </useCase>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="50643e1f-6dd1-443f-a303-c22c59ed3363" name="Win" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="e0c8d1f1-4cd8-4949-ab27-2e225f54563b" />
+        <extendedCases>
+          <extend Id="438dcdb7-3d93-40be-b6a4-a46ffa6da01f">
+            <useCaseMoniker Id="b47f5eb0-5915-4093-9ebd-8ad9efb8c944" LastKnownName="Attack" />
+            <elementDefinition Id="0ea57591-fb15-4d45-a1b3-56d474f87f9f" />
+          </extend>
+        </extendedCases>
+        <additions>
+          <include Id="440df602-88a9-449f-a2f2-16635aec5491">
+            <useCaseMoniker Id="ff975c06-3b0a-4c14-81e2-83da23b8e455" LastKnownName="Move to Destination" />
+            <elementDefinition Id="15c88338-9df2-44b3-965c-b572b377e1d4" />
+          </include>
+        </additions>
+      </useCase>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="6e1b819e-d29d-49ba-8811-ec11b51a16df" name="Lose" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="36b61a6b-38c2-403c-94b2-1bb9b39a6180" />
+        <extendedCases>
+          <extend Id="d89d149d-ec9d-4274-8dc2-495af59439e6">
+            <useCaseMoniker Id="b47f5eb0-5915-4093-9ebd-8ad9efb8c944" LastKnownName="Attack" />
+            <elementDefinition Id="0b916cb9-e9f6-4c55-b38d-5601621b9c5e" />
+          </extend>
+        </extendedCases>
+      </useCase>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="ff975c06-3b0a-4c14-81e2-83da23b8e455" name="Move to Destination" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="d06b5fcb-f712-436c-a9b2-0de80b6e7e21" />
+      </useCase>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <useCase Id="4b281ba3-f7b3-47de-a72f-c40ae981c9c5" name="Select Unit" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="fa0391ed-da11-4e06-8ad1-6c235d8c9080" />
+        <additions>
+          <include Id="248f4d2c-4273-4974-a416-13195c733c95">
+            <useCaseMoniker Id="4c7ab069-bd9a-4d9f-8e77-8fcad41c7bce" LastKnownName="Select Destination" />
+            <elementDefinition Id="50d772f4-98fd-4041-aec3-65de9c2e7820" />
+          </include>
+        </additions>
+      </useCase>
+    </useCaseModelRootHasTypes>
+  </packagedElements>
+  <package Id="9ddf5a17-34c1-40fe-82c3-9ee375a9f833" name="Modeling">
+    <elementDefinition Id="1be8b4b0-f16e-491b-8bb3-5e2b68ca8e5a" />
+    <profileInstances>
+      <packageHasProfileInstances Id="fcac00ad-bbe9-45bf-85a1-0ef97fcaea81">
+        <profileInstance Id="52bfde75-4337-4410-b24e-39b269513e41" name="StandardProfileL2">
+          <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+        </profileInstance>
+        <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+      </packageHasProfileInstances>
+      <packageHasProfileInstances Id="b1447a75-3273-4113-bfeb-646a1259c962">
+        <profileInstance Id="488dfeb7-9675-4a9f-9370-0e34b35f3951" name="StandardProfileL3">
+          <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+        </profileInstance>
+        <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+      </packageHasProfileInstances>
+    </profileInstances>
+  </package>
+</useCaseModelRoot>

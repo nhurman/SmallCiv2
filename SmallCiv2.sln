@@ -14,6 +14,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SCvNativeWrapper", "SCvNati
 		{D6848407-3363-4EF4-8B13-A5579517F332} = {D6848407-3363-4EF4-8B13-A5579517F332}
 	EndProjectSection
 EndProject
+Project("{F088123C-0E9E-452A-89E6-6BA2F21D5CAC}") = "Modeling", "Modeling\Modeling.modelproj", "{C93C73A9-45D7-438C-944C-3ECECBB73CA5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -64,6 +66,16 @@ Global
 		{35B0A054-1F4E-4FE7-81DB-1B59C81DD3F9}.Release|Mixed Platforms.Build.0 = Release|Win32
 		{35B0A054-1F4E-4FE7-81DB-1B59C81DD3F9}.Release|Win32.ActiveCfg = Release|Win32
 		{35B0A054-1F4E-4FE7-81DB-1B59C81DD3F9}.Release|Win32.Build.0 = Release|Win32
+		{C93C73A9-45D7-438C-944C-3ECECBB73CA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C93C73A9-45D7-438C-944C-3ECECBB73CA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C93C73A9-45D7-438C-944C-3ECECBB73CA5}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{C93C73A9-45D7-438C-944C-3ECECBB73CA5}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{C93C73A9-45D7-438C-944C-3ECECBB73CA5}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{C93C73A9-45D7-438C-944C-3ECECBB73CA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C93C73A9-45D7-438C-944C-3ECECBB73CA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C93C73A9-45D7-438C-944C-3ECECBB73CA5}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{C93C73A9-45D7-438C-944C-3ECECBB73CA5}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{C93C73A9-45D7-438C-944C-3ECECBB73CA5}.Release|Win32.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

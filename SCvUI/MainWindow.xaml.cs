@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Effects;
 using System.Windows.Navigation;
 using System.Windows.Threading;
+using Microsoft.Win32;
 using SCvLib;
 using Color = System.Drawing.Color;
 using Point = System.Drawing.Point;
@@ -148,8 +149,22 @@ namespace SCvUI
         private void Load_OnClick(object sender, RoutedEventArgs e)
         {
             GameCreator.Visibility = Visibility.Collapsed;
-            _game = GameBuilder.Load();
-            OnResume();
+
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            dlg.FileName = "save.scv"; // Default file name
+            dlg.DefaultExt = ".scv"; // Default file extension
+            dlg.Filter = "SmallCiv saves (.scv)|*.scv"; // Filter files by extension
+
+            // Show open file dialog box
+            Nullable<bool> result = dlg.ShowDialog();
+
+            // Process open file dialog box results
+            if (result == true)
+            {
+                // Open document
+                _game = GameBuilder.Load(dlg.FileName);
+                OnResume();
+            }
         }
 
         private void Create_OnClick(object sender, RoutedEventArgs e)
@@ -214,8 +229,23 @@ namespace SCvUI
         }
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            GameBuilder.Save(_game);
-            OnResume();
+            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog();
+            dlg.FileName = "save.scv"; // Default file name
+            dlg.DefaultExt = ".scv"; // Default file extension
+            dlg.Filter = "SmallCiv saves (.scv)|*.scv"; // Filter files by extension
+
+            // Show save file dialog box
+            Nullable<bool> result = dlg.ShowDialog();
+
+            // Process save file dialog box results
+            if (result == true)
+            {
+                // Save document
+                GameBuilder.Save(_game, dlg.FileName);
+                OnResume();
+            }
+
+            
         }
         #endregion
 
